@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 
 import {
+  View,
+  Text,
   Keyboard,
   SafeAreaView,
   StyleSheet,
@@ -14,9 +15,9 @@ import { NavigationContainer, NavigationRouteContext, StackActions } from "@reac
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 //importing other screens.js files
-import calcScreen from './screens/calcScreen';
-import settingsScreen from './screens/settingsScreen';
-import homeScreen from './screens/homeScreen';
+import CalcScreen from './screens/CalcScreen';
+import SettingsScreen from './screens/SettingsScreen';
+import HomeScreen from './screens/HomeScreen';
 
 export default function App() {
 
@@ -39,7 +40,7 @@ export default function App() {
                     fontWeight: 'bold',
                   },
                 }}
-                component={homeScreen}
+                component={HomeScreen}
                 />
                 <Stack.Screen 
                 name="Settings" 
@@ -54,7 +55,7 @@ export default function App() {
                     fontWeight: 'bold',
                   },
                 }}
-                component={settingsScreen} 
+                component={SettingsScreen} 
                 />
               </Stack.Navigator>
           </NavigationContainer>
