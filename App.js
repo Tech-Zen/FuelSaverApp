@@ -14,59 +14,23 @@ import React from "react";
 import { NavigationContainer, NavigationRouteContext, StackActions } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-//importing other screens.js files
-import CalcScreen from './screens/CalcScreen';
-import SettingsScreen from './screens/SettingsScreen';
-import HomeScreen from './screens/HomeScreen';
+import MainContainer from './helpers/MainContainer';
 
 export default function App() {
 
   const Stack = createNativeStackNavigator();
   return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView style={styles.container}>
-          <NavigationContainer>
-              <Stack.Navigator>
-                <Stack.Screen 
-                name="Fuel Saver" 
-                options={{
-                  title: 'Fuel Saver',
-                  headerTitleAlign: 'center',
-                  headerTintColor: 'white',
-                  headerStyle: {
-                    backgroundColor: '#0f88bd',
-                  },
-                  headerTitleStyle: {
-                    fontWeight: 'bold',
-                  },
-                }}
-                component={HomeScreen}
-                />
-                <Stack.Screen 
-                name="Settings" 
-                options={{
-                  title: 'Settings',
-                  headerTitleAlign: 'center',
-                  headerTintColor: 'white',
-                  headerStyle: {
-                    backgroundColor: '#0f88bd',
-                  },
-                  headerTitleStyle: {
-                    fontWeight: 'bold',
-                  },
-                }}
-                component={SettingsScreen} 
-                />
-              </Stack.Navigator>
-          </NavigationContainer>
-        </SafeAreaView>
+          <SafeAreaView style={styles.container}>
+             <MainContainer/>
+          </SafeAreaView>
         </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'black',
+    backgroundColor: '#081C15',
     flex: 1,
   },
 });
