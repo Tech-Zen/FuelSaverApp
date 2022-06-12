@@ -9,6 +9,8 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import CalcScreen from './screens/CalcScreen';
 
 //Added dependenices for react navigation
 import { NavigationContainer, NavigationRouteContext, StackActions } from "@react-navigation/native";
@@ -20,11 +22,26 @@ export default function App() {
 
   const Stack = createNativeStackNavigator();
   return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <SafeAreaView style={styles.container}>
-             <MainContainer/>
-          </SafeAreaView>
-        </TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <SafeAreaView style={styles.container}>
+        <NavigationContainer>
+          <Stack.Navigator >
+            <Stack.Screen
+              name="Fuel Savor"
+              component={CalcScreen}
+              options={{
+                headerStyle: {
+                  backgroundColor: '#264391',
+                },
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                  color: "#FFFFFF"
+                },
+              }} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 
