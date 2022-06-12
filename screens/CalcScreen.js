@@ -6,6 +6,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { storeHistoryItem, setupHistoryListener, initHistoryDB } from "../helpers/firebase-fs.js"
 import { RadioButton } from 'react-native-paper';
 import RadioButtonRN from 'radio-buttons-react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 /*
 Imperial or Metric Option
 
@@ -16,7 +17,7 @@ Estimated Route Fuel Burn
 
 const CalcScreen = ({ route, navigation }) => {
   const [state, setState] = useState({ mpg: '', price: '', size: '', route: '', distance: '', full: '' });
-  const [checked, setChecked] = React.useState('Imperial');
+  //const [checked, setChecked] = useState('Imperial');
 
   const updateStateObject = (vals) => {
     setState({
@@ -24,14 +25,9 @@ const CalcScreen = ({ route, navigation }) => {
       ...vals,
     });
   };
-
   const data = [
-    {
-      label: 'Imperial'
-    },
-    {
-      label: 'Metric'
-    }
+    { label: 'Imperial' },
+    { label: 'Metric' }
   ];
 
 
@@ -39,9 +35,9 @@ const CalcScreen = ({ route, navigation }) => {
     return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
   }
 
-  function computeFuelConsumption(mpg, route, data) {
+  function computeFuelConsumption(mpg, route, label) {
     var ans = route / mpg
-    if (data === 'Imperial') {
+    if (label === 'Imperial') {
       return `${round(ans, 2)} Gallons`;
     } else {
       return `${round(ans, 2)} Liters`;
@@ -77,15 +73,22 @@ const CalcScreen = ({ route, navigation }) => {
       <RadioButtonRN
         data={data}
         selectedBtn={(e) => console.log(e)}
+        icon={
+          <Icon
+            name="check-circle"
+            size={25}
+            color="#2c9dd1"
+          />
+        }
       />
       {/* <RadioButton
-        title='Imperial'
+        label='Imperial'
         value="Imperial"
         status={checked === 'Imperial' ? 'checked' : 'unchecked'}
         onPress={() => setChecked('Imperial')}
       />
       <RadioButton
-        title='Metric'
+        label='Metric'
         value="Metric"
         status={checked === 'Metric' ? 'checked' : 'unchecked'}
         onPress={() => setChecked('Metric')}
@@ -126,8 +129,8 @@ const CalcScreen = ({ route, navigation }) => {
         title='Calculate'
         style={styles.buttons}
         onPress={() => {
-          var dist = computeFuelConsumption(state.mpg, state.route)
-          var fill = computeCostToFill(state.price, state.size)
+          var dist = computeFuelConsumption(state.mpg, state.route, data.label)
+          var fill = computeCostToFill(state.price, state.size, data.label)
           updateStateObject({
             distance: dist, full: fill,
           })
