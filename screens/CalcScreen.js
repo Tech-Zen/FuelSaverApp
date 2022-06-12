@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Feather } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { storeHistoryItem, setupHistoryListener, initHistoryDB } from "../helpers/firebase-fs.js"
-import { Checkbox } from "native-base";
+import { RadioButton } from 'react-native-paper';
+import RadioButtonRN from 'radio-buttons-react-native';
 /*
 Imperial or Metric Option
 
@@ -14,7 +15,8 @@ Estimated Route Fuel Burn
 */
 
 const CalcScreen = ({ route, navigation }) => {
-  const [state, setState] = useState({ mpg: '', price: '', size: '', route: '', distance: '', full: '', imperial: false, metric: false });
+  const [state, setState] = useState({ mpg: '', price: '', size: '', route: '', distance: '', full: '' });
+  const [checked, setChecked] = React.useState('Imperial');
 
   const updateStateObject = (vals) => {
     setState({
@@ -23,15 +25,28 @@ const CalcScreen = ({ route, navigation }) => {
     });
   };
 
+  const data = [
+    {
+      label: 'Imperial'
+    },
+    {
+      label: 'Metric'
+    }
+  ];
+
 
   function round(value, decimals) {
     return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
   }
 
-  function computeFuelConsumption(mpg, route) {
+  function computeFuelConsumption(mpg, route, data) {
     var ans = route / mpg
+    if (data === 'Imperial') {
+      return `${round(ans, 2)} Gallons`;
+    } else {
+      return `${round(ans, 2)} Liters`;
+    }
 
-    return `${round(ans, 2)}`;
 
   }
 
@@ -58,26 +73,25 @@ const CalcScreen = ({ route, navigation }) => {
     <View>
       <Text>Welcome to the Calculator</Text>
       <Text></Text>
-      <Text>Imperial or Metric</Text>
-      {/* <Checkbox
-        title="Imperial"
-        left
-        checked={state.imperial}
-        checkedIcon="dot-circle-o"
-        uncheckedIcon="circle-o"
-        onPress={calImp}
+      <Text>Select Imperial or Metric</Text>
+      <RadioButtonRN
+        data={data}
+        selectedBtn={(e) => console.log(e)}
       />
-      <Checkbox
-        title="Metric"
-        left
-        checked={state.metric}
-        checkedIcon="dot-circle-o"
-        uncheckedIcon="circle-o"
-        onPress={calMet}
+      {/* <RadioButton
+        title='Imperial'
+        value="Imperial"
+        status={checked === 'Imperial' ? 'checked' : 'unchecked'}
+        onPress={() => setChecked('Imperial')}
+      />
+      <RadioButton
+        title='Metric'
+        value="Metric"
+        status={checked === 'Metric' ? 'checked' : 'unchecked'}
+        onPress={() => setChecked('Metric')}
       /> */}
-
       <Input
-        placeholder='Enter Vehicles Combined MPG'
+        placeholder='Enter Vehicles Combined MPG or KM/L'
         keyboardType='numeric'
         value={state.mpg}
         onChangeText={(value) => {
