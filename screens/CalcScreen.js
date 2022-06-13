@@ -1,12 +1,10 @@
-import { Button, Input, Header } from "react-native-elements";
+import {  Input } from "react-native-elements";
 import { Keyboard, StyleSheet, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
-import { Feather } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { storeHistoryItem, setupHistoryListener, initHistoryDB } from "../helpers/firebase-fs.js"
-import { RadioButton } from 'react-native-paper';
-import RadioButtonRN from 'radio-buttons-react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 /*
 Imperial or Metric Option
 
@@ -16,8 +14,8 @@ Estimated Route Fuel Burn
 */
 
 const CalcScreen = ({ route, navigation }) => {
-  const [state, setState] = useState({ mpg: '', price: '', size: '', route: '', distance: '', full: '' });
-  //const [checked, setChecked] = useState('Imperial');
+  const [state, setState] = useState({ mpg: '', price: '', size: '', route: '', distance: '', full: '', calcResults: ''});
+  const [checked, setChecked] = useState('Imperial');
 
   const updateStateObject = (vals) => {
     setState({
@@ -42,13 +40,10 @@ const CalcScreen = ({ route, navigation }) => {
     } else {
       return `${round(ans, 2)} Liters`;
     }
-
-
   }
 
   function computeCostToFill(price, size) {
     var tank = price * size
-
     return `${round(tank, 2)}`;
   }
 
@@ -68,29 +63,6 @@ const CalcScreen = ({ route, navigation }) => {
   return (
     <View>
       <Text>Select Imperial or Metric</Text>
-      <RadioButtonRN
-        data={data}
-        selectedBtn={(e) => console.log(e)}
-        icon={
-          <Icon
-            name="check-circle"
-            size={25}
-            color="#95D5B2"
-          />
-        }
-      />
-      {/* <RadioButton
-        label='Imperial'
-        value="Imperial"
-        status={checked === 'Imperial' ? 'checked' : 'unchecked'}
-        onPress={() => setChecked('Imperial')}
-      />
-      <RadioButton
-        label='Metric'
-        value="Metric"
-        status={checked === 'Metric' ? 'checked' : 'unchecked'}
-        onPress={() => setChecked('Metric')}
-      /> */}
       <Input
         placeholder='Enter Vehicles Combined MPG or KM/L'
         keyboardType='numeric'
@@ -132,6 +104,7 @@ const CalcScreen = ({ route, navigation }) => {
             updateStateObject({
               distance: dist, full: fill,
             })
+            updateStateObject({calcResults: `Estimated Route Fuel Burn: ${dist}\nPrice to fill up a tank of fuel: ${fill}`});
             Keyboard.dismiss()
           }}
           >
@@ -142,14 +115,13 @@ const CalcScreen = ({ route, navigation }) => {
           style={styles.buttons}
           onPress={() => {
           Keyboard.dismiss()
-          updateStateObject({mpg: '', price: '', size: '', route: '', distance: '', full: ''})}}
+          updateStateObject({mpg: '', price: '', size: '', route: '', distance: '', full: '', calcResults: ''})}}
           >
           <Text style={styles.btnText}>Clear</Text>
         </TouchableOpacity>
 
       <View style={styles.CalcResults}>
-        <Text style={styles.resultsText}>Estimated Route Fuel Burn: {state.distance}</Text>
-        <Text style={styles.resultsText}>Price to fill up a tank of fuel: ${state.full}</Text>
+        <Text style={styles.resultsText}>{state.calcResults}</Text>
       </View>
     </View>
   );
