@@ -12,7 +12,6 @@ const HomeScreen = ({ route, navigation }) => {
 
   return (
     <View>
-      <NewsFeed />
       <Text>Hello World</Text>
     </View>
   )

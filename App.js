@@ -24,22 +24,7 @@ export default function App() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
-        <NavigationContainer>
-          <Stack.Navigator >
-            <Stack.Screen
-              name="Fuel Savor"
-              component={CalcScreen}
-              options={{
-                headerStyle: {
-                  backgroundColor: '#264391',
-                },
-                headerTitleStyle: {
-                  fontWeight: 'bold',
-                  color: "#FFFFFF"
-                },
-              }} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <MainContainer/>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
