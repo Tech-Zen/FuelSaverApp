@@ -12,7 +12,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 
 //Screen names
 const homeName = "Home";
-const calcName = "Calculator";
+const calcName = "Fuel Calculator";
 const settingsName = "Settings";
 
 const Tab = createBottomTabNavigator();

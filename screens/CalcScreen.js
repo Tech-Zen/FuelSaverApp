@@ -67,8 +67,6 @@ const CalcScreen = ({ route, navigation }) => {
 
   return (
     <View>
-      <Text>Welcome to the Calculator</Text>
-      <Text></Text>
       <Text>Select Imperial or Metric</Text>
       <RadioButtonRN
         data={data}
@@ -77,7 +75,7 @@ const CalcScreen = ({ route, navigation }) => {
           <Icon
             name="check-circle"
             size={25}
-            color="#2c9dd1"
+            color="#95D5B2"
           />
         }
       />
@@ -102,7 +100,7 @@ const CalcScreen = ({ route, navigation }) => {
         }}
       />
       <Input
-        placeholder='Enter Gas/Diesel Price'
+        placeholder='Enter Fuel Price'
         keyboardType='numeric'
         value={state.price}
         onChangeText={(value) => {
@@ -110,7 +108,7 @@ const CalcScreen = ({ route, navigation }) => {
         }}
       />
       <Input
-        placeholder='Enter Tank Size'
+        placeholder='Enter Fuel Tank Size'
         keyboardType='numeric'
         value={state.size}
         onChangeText={(value) => {
@@ -125,31 +123,33 @@ const CalcScreen = ({ route, navigation }) => {
           handleError(value, 'route')
         }}
       />
-      <Button
-        title='Calculate'
-        style={styles.buttons}
-        onPress={() => {
-          var dist = computeFuelConsumption(state.mpg, state.route, data.label)
-          var fill = computeCostToFill(state.price, state.size, data.label)
-          updateStateObject({
-            distance: dist, full: fill,
-          })
+      
+        <TouchableOpacity 
+          style={styles.buttons}
+          onPress={() => {
+            var dist = computeFuelConsumption(state.mpg, state.route, data.label)
+            var fill = computeCostToFill(state.price, state.size, data.label)
+            updateStateObject({
+              distance: dist, full: fill,
+            })
+            Keyboard.dismiss()
+          }}
+          >
+          <Text style={styles.btnText}>Calculate</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.buttons}
+          onPress={() => {
           Keyboard.dismiss()
-        }}
-      />
-      <Button
-        title='Clear'
-        style={styles.buttons}
-        onPress={() => {
-          Keyboard.dismiss()
-          updateStateObject({
-            mpg: '', price: '', size: '', route: ''
-          })
-        }}
-      />
-      <View>
-        <Text>Estimated Route Fuel Burn: {state.distance}</Text>
-        <Text>Price to fill up a tank of fuel: ${state.full}</Text>
+          updateStateObject({mpg: '', price: '', size: '', route: '', distance: '', full: ''})}}
+          >
+          <Text style={styles.btnText}>Clear</Text>
+        </TouchableOpacity>
+
+      <View style={styles.CalcResults}>
+        <Text style={styles.resultsText}>Estimated Route Fuel Burn: {state.distance}</Text>
+        <Text style={styles.resultsText}>Price to fill up a tank of fuel: ${state.full}</Text>
       </View>
     </View>
   );
@@ -157,8 +157,35 @@ const CalcScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    color: "blue",
+    backgroundColor: '#FFF',
   },
+  buttons: {
+    marginRight: 50,
+    marginLeft: 50,
+    marginTop: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor:'#52B788',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#fff'
+  },
+  btnText: {
+    color:'#fff',
+    fontSize: 20,
+    textAlign:'center',
+    paddingLeft : 10,
+    paddingRight : 10,
+  }, 
+  CalcResults: {
+    margin: 20,
+    alignItems: 'center',
+  }, 
+  resultsText: {
+    padding: 10,
+    fontSize: 20,
+
+  }
 });
 
 export default CalcScreen;
