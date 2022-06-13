@@ -62,7 +62,6 @@ const CalcScreen = ({ route, navigation }) => {
 
   return (
     <View>
-      <Text>Select Imperial or Metric</Text>
       <Input
         placeholder='Enter Vehicles Combined MPG or KM/L'
         keyboardType='numeric'

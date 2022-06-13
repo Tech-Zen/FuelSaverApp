@@ -50,8 +50,6 @@ function MainContainer() {
           style: { padding: 20, height: 70}
         }}>
 
-
-
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={calcName} component={CalcScreen} />
         <Tab.Screen name={settingsName} component={SettingsScreen} />
