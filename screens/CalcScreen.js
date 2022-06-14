@@ -58,6 +58,10 @@ const CalcScreen = ({ route, navigation }) => {
         errors.price = "Fuel Price is Required!";
         numOfErrors++;
     }
+    if (values.price <= 0) {
+      errors.price = "Gas isn't Free!";
+      numOfErrors++;
+  }
     if (!values.size) {
         errors.size = "Fuel Tank Size is Required!";
         numOfErrors++;
@@ -100,7 +104,7 @@ const CalcScreen = ({ route, navigation }) => {
 
     //check if no errors / if so calculate and display results
     if (numOfErrors === 0) {
-    updateStateObject({calcResults: `Price to fill up a whole tank of fuel: ${costToFill}\nEstimated Fuel Burn on Route: ${fuelBurn}`});
+    updateStateObject({calcResults: `Price to fill tank: ${costToFill}\n\nEstimated Fuel Burn: ${fuelBurn}`});
     }
     Keyboard.dismiss()
   }
@@ -196,7 +200,9 @@ const styles = StyleSheet.create({
   }, 
   resultsText: {
     padding: 10,
-    fontSize: 20,
+    fontSize: 18,
+    fontWeight: 'bold',
+
 
   }
 });
