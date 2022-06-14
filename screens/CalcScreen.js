@@ -51,7 +51,7 @@ const CalcScreen = ({ route, navigation }) => {
     }
 
     if (!values.mpg) {
-        errors.mpg = "MPG or KM/L is Required!";
+        errors.mpg = "MPG is Required!";
         numOfErrors++;
     }
     if (!values.price) {
