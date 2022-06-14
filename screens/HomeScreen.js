@@ -21,7 +21,7 @@ const [modalGuideVisible, setGuideModalVisible] = useState(false);
             style={styles.box}
             onPress={() => {setTipsModalVisible(true)}}
             >
-            <Text style={styles.boxText}>Fuel Tips</Text>
+            <Text style={styles.boxText}>  Fuel Tips  </Text>
           </TouchableOpacity>
           <TouchableOpacity 
             style={styles.box}
@@ -33,7 +33,7 @@ const [modalGuideVisible, setGuideModalVisible] = useState(false);
             style={styles.box}
             onPress={() => {setGuideModalVisible(true)}}
             >
-            <Text style={styles.boxText}>App Guide</Text>
+            <Text style={styles.boxText}>Fuel Nearby</Text>
           </TouchableOpacity>
       </View>
 
@@ -98,7 +98,7 @@ const [modalGuideVisible, setGuideModalVisible] = useState(false);
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalTextTitle}>App Guide:</Text>
+              <Text style={styles.modalTextTitle}>Fuel Nearby</Text>
               <View style={styles.modalContentBox}>
                   <Text> Lorem Ipsum</Text>
                 </View>
@@ -125,15 +125,13 @@ const [modalGuideVisible, setGuideModalVisible] = useState(false);
 
 const styles = StyleSheet.create({
   topContainer: {
-    height: 250,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    alignItemes: 'center',
   },
   box: { 
-    flex: .33,
-    padding: 10,
+    padding: 20,
     marginTop: 20,
+    marginBottom: 20,
     borderRadius: 10,
     backgroundColor:'#52B788',
     borderColor: '#fff'
@@ -141,27 +139,22 @@ const styles = StyleSheet.create({
   boxText: {
     color: '#fff',
     fontWeight: 'bold',
-    paddingTop: 25,
   },
   newsContainer: {
 
   },
   //Modal Views for Fuel Tips, Trends, etc
   centeredView: {
-    flex: 1,
-    //justifyContent: "center",
-    //alignItems: "center",
-    marginTop: 30
+    marginTop: 20,
+    marginBottom: 20,
   },
   modalView: {
-    flex: 1,
-    width: "90%",
     margin: 20,
     backgroundColor: "white",
     borderRadius: 20,
     padding: 15,
-    alignItems: "center",
-    justifyContent: 'center',
+    // alignItems: "center",
+    // justifyContent: 'center',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
