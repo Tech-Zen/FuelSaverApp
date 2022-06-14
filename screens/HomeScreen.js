@@ -5,7 +5,7 @@ import { TouchableOpacity, FlatList } from "react-native-gesture-handler";
 
 
 import { storeHistoryItem, setupHistoryListener, initHistoryDB } from "../helpers/firebase-fs.js"
-import getNews from "../helpers/news.js";
+import { getNews } from "../helpers/news.js";
 
 const HomeScreen = ({ route, navigation }) => {
 
@@ -77,7 +77,7 @@ const renderNews = ( { index, data}) => {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalTextTitle}>Fuel Tips:</Text>
+              <Text style={styles.modalTextTitle}>Fuel Tips</Text>
                 <Text>These are fuel tips!</Text>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
@@ -174,12 +174,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
-  newsContainer: {
-
-  },
   //Modal Views for Fuel Tips, Trends, etc
   centeredView: {
-    marginTop: 20,
+    marginTop: "50%",
     marginBottom: 20,
   },
   modalView: {
@@ -205,6 +202,7 @@ const styles = StyleSheet.create({
   },
   buttonClose: {
     backgroundColor: "#52B788",
+    padding: 10,
   },
   textStyle: {
     color: "white",
@@ -214,6 +212,7 @@ const styles = StyleSheet.create({
   modalTextTitle: {
     textAlign: "center",
     fontSize: 20,
+    fontWeight: 'bold',
   },
   modalContentBox: {
   }

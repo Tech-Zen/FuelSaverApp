@@ -3,18 +3,10 @@ import { Keyboard, StyleSheet, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { storeHistoryItem, setupHistoryListener, initHistoryDB } from "../helpers/firebase-fs.js"
-import Icon from 'react-native-vector-icons/FontAwesome';
-
-/*
-Imperial or Metric Option
-
-Price to fill up a tank of fuel
-
-Estimated Route Fuel Burn
-*/
 
 const CalcScreen = ({ route, navigation }) => {
-  const [state, setState] = useState({ mpg: '', price: '', size: '', route: '', calcResults: ''});
+  //Size = TankSize
+  const [state, setState] = useState({ mpg: '', price: '', size: '', route: '', calcResults: '', routeTitle: ''});
   const [stateErrors, setStateErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
 
@@ -49,7 +41,11 @@ const CalcScreen = ({ route, navigation }) => {
         errors.route = "Must be a number!"
         numOfErrors++;
     }
-
+    
+    if (!values.routeTitle) {
+      errors.routeTitle = "Route Title is Required!";
+      numOfErrors++;
+    }
     if (!values.mpg) {
         errors.mpg = "MPG is Required!";
         numOfErrors++;
@@ -58,10 +54,6 @@ const CalcScreen = ({ route, navigation }) => {
         errors.price = "Fuel Price is Required!";
         numOfErrors++;
     }
-    if (values.price <= 0) {
-      errors.price = "Gas isn't Free!";
-      numOfErrors++;
-  }
     if (!values.size) {
         errors.size = "Fuel Tank Size is Required!";
         numOfErrors++;
@@ -77,11 +69,19 @@ const CalcScreen = ({ route, navigation }) => {
     return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
     }
 
-
-  //function calcFuelConsumption(mpg, route)
   function calcTankCost(tank, price) { 
     const tankCost = tank * price;
     return `$${round(tankCost, 2)}`
+  }
+
+  function calcTripCost(tank, route, mpg, price) {
+    const maxDist = tank * mpg;
+    const fuelBurned = route / maxDist;
+    const cost = fuelBurned * price;
+    console.log(`maxDist: ${maxDist}`)
+    console.log(`fuelBurned: ${fuelBurned}`)
+    console.log(`cost: ${cost}`)
+    return `$${cost}`
   }
 
   function calcFuelBurn(tank, route, mpg) {
@@ -93,7 +93,6 @@ const CalcScreen = ({ route, navigation }) => {
     }
     return `${round(total, 2)} gals`
   }
-
   
   const handleSubmit = () => { 
     //validate state of inputs
@@ -101,16 +100,33 @@ const CalcScreen = ({ route, navigation }) => {
 
     var fuelBurn = calcFuelBurn(state.size, state.route, state.mpg)
     var costToFill = calcTankCost(state.size, state.price)
+    var tripCost = calcTripCost(state.size, state.route, state.mpg, state.price)
 
     //check if no errors / if so calculate and display results
     if (numOfErrors === 0) {
-    updateStateObject({calcResults: `Price to fill tank: ${costToFill}\n\nEstimated Fuel Burn: ${fuelBurn}`});
+    updateStateObject({calcResults: 
+    `
+    Price to fill tank: ${costToFill}\n
+    Estimated Fuel Burn: ${fuelBurn}\n
+    Trip Cost: ${tripCost}
+    `
+    });
     }
     Keyboard.dismiss()
   }
 
   return (
     <View>
+      <Text style={{fontSize: 10, color: 'gray', paddingLeft: 10, paddingTop: 20,}}>Route Title</Text>
+       <Input
+        placeholder='Enter Your Route Title'
+        //keyboardType=
+        value={state.routeTitle}
+        onChangeText={(val) => updateStateObject({routeTitle: val})}
+        errorMessage = {stateErrors.routeTitle}
+        errorStyle={{ color: 'red' }}
+      />
+      <Text style={{fontSize: 10, color: 'gray', paddingLeft: 10, paddingTop: 5,}}>Vehicles Combined MPG</Text>
       <Input
         placeholder='Enter Vehicles Combined MPG'
         keyboardType='numeric'
@@ -119,6 +135,7 @@ const CalcScreen = ({ route, navigation }) => {
         errorMessage = {stateErrors.mpg}
         errorStyle={{ color: 'red' }}
       />
+      <Text style={{fontSize: 10, color: 'gray', paddingLeft: 10, paddingTop: 5,}}>Fuel Price</Text>
       <Input
         placeholder='Enter Fuel Price'
         keyboardType='numeric'
@@ -127,6 +144,7 @@ const CalcScreen = ({ route, navigation }) => {
         errorMessage = {stateErrors.price}
         errorStyle={{ color: 'red' }}
       />
+      <Text style={{fontSize: 10, color: 'gray', paddingLeft: 10, paddingTop: 5,}}>Fuel Tank Size</Text>
       <Input
         placeholder='Enter Fuel Tank Size'
         keyboardType='numeric'
@@ -135,6 +153,7 @@ const CalcScreen = ({ route, navigation }) => {
         errorMessage = {stateErrors.size}
         errorStyle={{ color: 'red' }}
       />
+      <Text style={{fontSize: 10, color: 'gray', paddingLeft: 10, paddingTop: 5,}}>Route Distance</Text>
       <Input
         placeholder='Enter Route Distance'
         keyboardType='numeric'
@@ -158,7 +177,7 @@ const CalcScreen = ({ route, navigation }) => {
           onPress={() => {
           Keyboard.dismiss()
           //Reset and clear input fields, calculated results, and errors
-          updateStateObject({mpg: '', price: '', size: '', route: '', distance: '', full: '', calcResults: ''})
+          updateStateObject({mpg: '', price: '', size: '', route: '', distance: '', full: '', calcResults: '', routeTitle: ''})
           setStateErrors('');
           }}
           >
@@ -202,8 +221,6 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
     fontWeight: 'bold',
-
-
   }
 });
 

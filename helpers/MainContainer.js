@@ -8,17 +8,16 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // Screens
 import HomeScreen from '../screens/HomeScreen';
 import CalcScreen from '../screens/CalcScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import HistoryScreen from '../screens/HistoryScreen';
 import GarageScreen from '../screens/GarageScreen';
 
 //Screen names
 const homeName = "Home";
 const calcName = "Fuel Calculator";
-const settingsName = "Settings";
+const historyName = "History";
 const garageName = "My Garage";
 
 const Tab = createBottomTabNavigator();
-
 
 function MainContainer() {
   return (
@@ -39,8 +38,8 @@ function MainContainer() {
             } else if (routeName === garageName) {
               iconName = focused ? 'car-sport-outline' : 'car-sport-outline';
             }
-              else if (routeName === settingsName) {
-              iconName = focused ? 'settings' : 'settings';
+              else if (routeName === historyName) {
+              iconName = focused ? 'archive-outline' : 'archive-outline';
             } 
 
             // You can return any component that you like here!
@@ -59,7 +58,7 @@ function MainContainer() {
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={calcName} component={CalcScreen} />
         <Tab.Screen name={garageName} component={GarageScreen} />
-        <Tab.Screen name={settingsName} component={SettingsScreen} />
+        <Tab.Screen name={historyName} component={HistoryScreen} />
 
       </Tab.Navigator>
     </NavigationContainer>

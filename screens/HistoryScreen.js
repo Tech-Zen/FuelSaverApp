@@ -8,15 +8,10 @@ import { storeHistoryItem, setupHistoryListener, initHistoryDB} from "../helpers
 //import DropDownPicker from 'react-native-dropdown-picker';
 
 
-const SettingsScreen = (route) => {
-    const [system, setSystem] = useState([
-        {label: 'Imperial', value: 'Imperial'},
-        {label: 'Metric', value: 'Metric'},
-    ]);
-
+const HistoryScreen = (route) => {
     return (
         <View>
-        <Text>Welcome to the Settings</Text>
+        <Text>Welcome to the History</Text>
       </View>
 );
 }
@@ -26,4 +21,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SettingsScreen;
+export default HistoryScreen;
