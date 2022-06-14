@@ -26,7 +26,6 @@ useEffect(() => {
   });
 }, []);
 
-
 const renderNews = ( { index, data}) => {
   return (
     <TouchableOpacity>

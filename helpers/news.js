@@ -2,14 +2,14 @@ import axios from 'axios';
 import { news_api_key } from '../private/newsAPIkey';
 
 const NewsServer = axios.create({ 
-    baseURL: `https://newsapi.org/v2/everything?q=%22US%20gasoline%22&apiKey=${news_api_key}`,
+    baseURL: `https://newsapi.org/v2/everything`,
 }); 
 
 NewsServer.interceptors.request.use(
     async (config) => {
         //sets header to get JSON data from News API
         config.headers.Accept = 'application/json';
-        //console.log(config);
+        console.log(config);
         return config;
     },
     (err) => {
@@ -19,7 +19,7 @@ NewsServer.interceptors.request.use(
 
 export const getNews = async (callback) => {
     const response = await NewsServer.get(
-    //`q="US gasoline"&apiKey=${news_api_key}`
+    `?q=%22US%20gasoline%22&apiKey=${news_api_key}`
     );
     callback(response.data);
 };

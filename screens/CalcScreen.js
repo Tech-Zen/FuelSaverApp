@@ -14,8 +14,9 @@ Estimated Route Fuel Burn
 */
 
 const CalcScreen = ({ route, navigation }) => {
-  const [state, setState] = useState({ mpg: '', price: '', size: '', route: '', distance: '', full: '', calcResults: ''});
-  const [checked, setChecked] = useState('Imperial');
+  const [state, setState] = useState({ mpg: '', price: '', size: '', route: '', calcResults: ''});
+  const [stateErrors, setStateErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const updateStateObject = (vals) => {
     setState({
@@ -23,88 +24,126 @@ const CalcScreen = ({ route, navigation }) => {
       ...vals,
     });
   };
-  const data = [
-    { label: 'Imperial' },
-    { label: 'Metric' }
-  ];
 
+  //Validation Input Handling
+  let numOfErrors = 0;
+
+  const validate = (values) => {
+    const errors = {};
+    if(isNaN(values.mpg)) {
+        errors.mpg = "Must be a number!"
+        numOfErrors++;
+    }
+
+    if(isNaN(values.price)) {
+        errors.price = "Must be a number!"
+        numOfErrors++;
+    }
+
+    if(isNaN(values.size)) {
+        errors.size = "Must be a number!"
+        numOfErrors++;
+    }
+
+    if(isNaN(values.route)) {
+        errors.route = "Must be a number!"
+        numOfErrors++;
+    }
+
+    if (!values.mpg) {
+        errors.mpg = "MPG or KM/L is Required!";
+        numOfErrors++;
+    }
+    if (!values.price) {
+        errors.price = "Fuel Price is Required!";
+        numOfErrors++;
+    }
+    if (!values.size) {
+        errors.size = "Fuel Tank Size is Required!";
+        numOfErrors++;
+    }
+    if (!values.route) {
+        errors.route = "Route Distance is Required!";
+        numOfErrors++;
+    }
+    return errors; 
+  }
 
   function round(value, decimals) {
     return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
-  }
-
-  function computeFuelConsumption(mpg, route, label) {
-    var ans = route / mpg
-    if (label === 'Imperial') {
-      return `${round(ans, 2)} Gallons`;
-    } else {
-      return `${round(ans, 2)} Liters`;
     }
+
+
+  //function calcFuelConsumption(mpg, route)
+  function calcTankCost(tank, price) { 
+    const tankCost = tank * price;
+    return `$${round(tankCost, 2)}`
   }
 
-  function computeCostToFill(price, size) {
-    var tank = price * size
-    return `${round(tank, 2)}`;
-  }
-
-  function handleError(val, box) {
-    var changes = {}
-    if (isNaN(val)) {
-      changes[box + 'error'] = 'Must be a number'
-    } else if (val == '') {
-      changes[box + 'error'] = "can't be empty"
-    } else {
-      changes[box + 'error'] = ''
+  function calcFuelBurn(tank, route, mpg) {
+    const maxDist = tank * mpg;
+    const fuelBurned = route / maxDist;
+    const total = fuelBurned * tank;
+    if (total >= tank) {
+      return `${round(total, 2)} gals. You'll need to fill up again!`
     }
-    changes[box] = val
-    updateStateObject(changes)
+    return `${round(total, 2)} gals`
+  }
+
+  
+  const handleSubmit = () => { 
+    //validate state of inputs
+    setStateErrors(validate(state));
+
+    var fuelBurn = calcFuelBurn(state.size, state.route, state.mpg)
+    var costToFill = calcTankCost(state.size, state.price)
+
+    //check if no errors / if so calculate and display results
+    if (numOfErrors === 0) {
+    updateStateObject({calcResults: `Price to fill up a whole tank of fuel: ${costToFill}\nEstimated Fuel Burn on Route: ${fuelBurn}`});
+    }
+    Keyboard.dismiss()
   }
 
   return (
     <View>
       <Input
-        placeholder='Enter Vehicles Combined MPG or KM/L'
+        placeholder='Enter Vehicles Combined MPG'
         keyboardType='numeric'
         value={state.mpg}
-        onChangeText={(value) => {
-          handleError(value, 'mpg')
-        }}
+        onChangeText={(val) => updateStateObject({mpg: val})}
+        errorMessage = {stateErrors.mpg}
+        errorStyle={{ color: 'red' }}
       />
       <Input
         placeholder='Enter Fuel Price'
         keyboardType='numeric'
         value={state.price}
-        onChangeText={(value) => {
-          handleError(value, 'price')
-        }}
+        onChangeText={(val) => updateStateObject({price: val})}
+        errorMessage = {stateErrors.price}
+        errorStyle={{ color: 'red' }}
       />
       <Input
         placeholder='Enter Fuel Tank Size'
         keyboardType='numeric'
         value={state.size}
-        onChangeText={(value) => {
-          handleError(value, 'size')
-        }}
+        onChangeText={(val) => updateStateObject({size: val})}
+        errorMessage = {stateErrors.size}
+        errorStyle={{ color: 'red' }}
       />
       <Input
         placeholder='Enter Route Distance'
         keyboardType='numeric'
         value={state.route}
-        onChangeText={(value) => {
-          handleError(value, 'route')
-        }}
+        onChangeText={(val) => updateStateObject({route: val})}
+        errorMessage = {stateErrors.route}
+        errorStyle={{ color: 'red' }}
       />
       
         <TouchableOpacity 
           style={styles.buttons}
           onPress={() => {
-            var dist = computeFuelConsumption(state.mpg, state.route, data.label)
-            var fill = computeCostToFill(state.price, state.size, data.label)
-            updateStateObject({
-              distance: dist, full: fill,
-            })
-            updateStateObject({calcResults: `Estimated Route Fuel Burn: ${dist}\nPrice to fill up a tank of fuel: ${fill}`});
-            Keyboard.dismiss()
+            handleSubmit()
           }}
           >
           <Text style={styles.btnText}>Calculate</Text>
@@ -114,7 +153,10 @@ const CalcScreen = ({ route, navigation }) => {
           style={styles.buttons}
           onPress={() => {
           Keyboard.dismiss()
-          updateStateObject({mpg: '', price: '', size: '', route: '', distance: '', full: '', calcResults: ''})}}
+          //Reset and clear input fields, calculated results, and errors
+          updateStateObject({mpg: '', price: '', size: '', route: '', distance: '', full: '', calcResults: ''})
+          setStateErrors('');
+          }}
           >
           <Text style={styles.btnText}>Clear</Text>
         </TouchableOpacity>
