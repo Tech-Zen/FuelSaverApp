@@ -1,13 +1,11 @@
-import { Button, Input } from "react-native-elements";
-import { Keyboard, StyleSheet, Text, ActivityIndicator, ScrollView, StatusBar, Modal, Pressable} from "react-native";
+import { Button, Input, Image, ListItem } from "react-native-elements";
+import { Keyboard, StyleSheet, Text, ActivityIndicator, ScrollView, StatusBar, Modal, Pressable, View, Alert} from "react-native";
 import React, { useState, useEffect, Component } from "react";
 import { TouchableOpacity, FlatList } from "react-native-gesture-handler";
-import { View, Alert } from "react-native";
+
 
 import { storeHistoryItem, setupHistoryListener, initHistoryDB } from "../helpers/firebase-fs.js"
-
-
-
+import getNews from "../helpers/news.js";
 
 const HomeScreen = ({ route, navigation }) => {
 
@@ -19,12 +17,32 @@ const [modalGuideVisible, setGuideModalVisible] = useState(false);
 //Use States for News API
 const [newsData, setNewsData] = useState([]);
 
-//Render for News Data
-const renderNews = (data) => {
-  console.log('data: ', data);
+//UseEffect to Load in News API Data // Curently doesn't console log data
+useEffect(() => {
+  console.log('Inside Use Effect');
+  getNews((data) => {
+    console.log("received: ", data);
+    setNewsData(data.articles);
+  });
+}, []);
 
 
-};
+const renderNews = ( { index, data}) => {
+  return (
+    <TouchableOpacity>
+      <ListItem key={index}>
+        <Image 
+          source={{ uri: data.articles.urlToImage }}
+          style={{ width: 100, height: 55 }}
+        />
+        <ListItem.Content>
+          <ListItem.Title> {data.articles.title} </ListItem.Title>
+        </ListItem.Content>
+        <ListItem.Chevron />
+      </ListItem>
+    </TouchableOpacity>
+  );
+}
 
   return (
     <View>
@@ -126,7 +144,12 @@ const renderNews = (data) => {
       </View>
     
       <View style={styles.newsContainer}>
-      {renderNews(newsData)}
+          <FlatList 
+            data={newsData}
+            keyExtractor={(articles) => articles.source.id}
+            extraData={newsData}
+            //renderItem={renderNews} 
+          />
       </View>
 
     </View>
@@ -134,6 +157,7 @@ const renderNews = (data) => {
 
 }
 
+//Style Sheet for Page
 const styles = StyleSheet.create({
   topContainer: {
     flexDirection: 'row',

@@ -1,21 +1,27 @@
-import {_api_key } from "../private/rest_config.js";
+import axios from 'axios';
+import { news_api_key } from '../private/newsAPIkey';
 
-//https://newsapi.org/v2/everything?q=%22US%20gasoline%22&apiKey=1a48fe2f7a854deb83660e6289a4df5c
+const NewsServer = axios.create({ 
+    baseURL: `https://newsapi.org/v2/everything?q=%22US%20gasoline%22&apiKey=${news_api_key}`,
+}); 
 
-export async function getArticles() {
-    try {
-        let articles = await fetch(`${articles_url}${keywords}${sortBy}`, {
-            headers: {
-                'X-API-KEY': _api_key
-            }
-        });
-        
-        let result = await articles.json();
-        articles = null;
-
-        return result.articles;
-    } 
-    catch(error) {
-        throw error;
+NewsServer.interceptors.request.use(
+    async (config) => {
+        //sets header to get JSON data from News API
+        config.headers.Accept = 'application/json';
+        //console.log(config);
+        return config;
+    },
+    (err) => {
+        return Promise.reject(err);
     }
-}
+);
+
+export const getNews = async (callback) => {
+    const response = await NewsServer.get(
+    //`q="US gasoline"&apiKey=${news_api_key}`
+    );
+    callback(response.data);
+};
+
+export default NewsServer;
