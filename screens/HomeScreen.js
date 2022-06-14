@@ -1,18 +1,30 @@
 import { Button, Input } from "react-native-elements";
 import { Keyboard, StyleSheet, Text, ActivityIndicator, ScrollView, StatusBar, Modal, Pressable} from "react-native";
 import React, { useState, useEffect, Component } from "react";
-import { Feather } from '@expo/vector-icons';
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity, FlatList } from "react-native-gesture-handler";
 import { View, Alert } from "react-native";
-import { Container, Content, List } from 'native-base';
+
 import { storeHistoryItem, setupHistoryListener, initHistoryDB } from "../helpers/firebase-fs.js"
+
+
 
 
 const HomeScreen = ({ route, navigation }) => {
 
+//Use States for Modal Buttons
 const [modalTipsVisible, setTipsModalVisible] = useState(false);
 const [modalTrendsVisible, setTrendsModalVisible] = useState(false);
 const [modalGuideVisible, setGuideModalVisible] = useState(false);
+
+//Use States for News API
+const [newsData, setNewsData] = useState([]);
+
+//Render for News Data
+const renderNews = (data) => {
+  console.log('data: ', data);
+
+
+};
 
   return (
     <View>
@@ -114,8 +126,7 @@ const [modalGuideVisible, setGuideModalVisible] = useState(false);
       </View>
     
       <View style={styles.newsContainer}>
-        <Text>Fuel News</Text>
-
+      {renderNews(newsData)}
       </View>
 
     </View>

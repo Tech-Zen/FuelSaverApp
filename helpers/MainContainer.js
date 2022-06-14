@@ -9,11 +9,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../screens/HomeScreen';
 import CalcScreen from '../screens/CalcScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import GarageScreen from '../screens/GarageScreen';
 
 //Screen names
 const homeName = "Home";
 const calcName = "Fuel Calculator";
 const settingsName = "Settings";
+const garageName = "My Garage";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,9 +35,12 @@ function MainContainer() {
             } else if (routeName === calcName) {
               iconName = focused ? 'calculator' : 'calculator';
 
-            } else if (routeName === settingsName) {
-              iconName = focused ? 'settings' : 'settings';
+            } else if (routeName === garageName) {
+              iconName = focused ? 'car-sport-outline' : 'car-sport-outline';
             }
+              else if (routeName === settingsName) {
+              iconName = focused ? 'settings' : 'settings';
+            } 
 
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -49,9 +54,10 @@ function MainContainer() {
           labelStyle: { paddingBottom: 10, fontSize: 10 },
           style: { padding: 20, height: 70}
         }}>
-
+        
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={calcName} component={CalcScreen} />
+        <Tab.Screen name={garageName} component={GarageScreen} />
         <Tab.Screen name={settingsName} component={SettingsScreen} />
 
       </Tab.Navigator>
