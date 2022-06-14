@@ -77,11 +77,14 @@ const CalcScreen = ({ route, navigation }) => {
   function calcTripCost(tank, route, mpg, price) {
     const maxDist = tank * mpg;
     const fuelBurned = route / maxDist;
-    const cost = fuelBurned * price;
-    console.log(`maxDist: ${maxDist}`)
-    console.log(`fuelBurned: ${fuelBurned}`)
-    console.log(`cost: ${cost}`)
-    return `$${cost}`
+    const total = fuelBurned * tank;
+    const cost = total * price;
+    return `$${round(cost, 2)}`
+  }
+
+  function calcRange(tank, mpg) {
+    const maxRange = tank * mpg;
+    return `${round(maxRange, 0)} miles`
   }
 
   function calcFuelBurn(tank, route, mpg) {
@@ -101,6 +104,7 @@ const CalcScreen = ({ route, navigation }) => {
     var fuelBurn = calcFuelBurn(state.size, state.route, state.mpg)
     var costToFill = calcTankCost(state.size, state.price)
     var tripCost = calcTripCost(state.size, state.route, state.mpg, state.price)
+    var tripRange = calcRange(state.size, state.mpg)
 
     //check if no errors / if so calculate and display results
     if (numOfErrors === 0) {
@@ -108,7 +112,8 @@ const CalcScreen = ({ route, navigation }) => {
     `
     Price to fill tank: ${costToFill}\n
     Estimated Fuel Burn: ${fuelBurn}\n
-    Trip Cost: ${tripCost}
+    Trip Cost: ${tripCost}\n
+    Estimated Range: ${tripRange}
     `
     });
     }
@@ -117,7 +122,7 @@ const CalcScreen = ({ route, navigation }) => {
 
   return (
     <View>
-      <Text style={{fontSize: 10, color: 'gray', paddingLeft: 10, paddingTop: 20,}}>Route Title</Text>
+      <Text style={{fontSize: 10, color: '#081C15', paddingLeft: 10, paddingTop: 5,}}>Route Title</Text>
        <Input
         placeholder='Enter Your Route Title'
         //keyboardType=
@@ -126,7 +131,7 @@ const CalcScreen = ({ route, navigation }) => {
         errorMessage = {stateErrors.routeTitle}
         errorStyle={{ color: 'red' }}
       />
-      <Text style={{fontSize: 10, color: 'gray', paddingLeft: 10, paddingTop: 5,}}>Vehicles Combined MPG</Text>
+      <Text style={{fontSize: 10, color: '#081C15', paddingLeft: 10,}}>Vehicles Combined MPG</Text>
       <Input
         placeholder='Enter Vehicles Combined MPG'
         keyboardType='numeric'
@@ -135,7 +140,7 @@ const CalcScreen = ({ route, navigation }) => {
         errorMessage = {stateErrors.mpg}
         errorStyle={{ color: 'red' }}
       />
-      <Text style={{fontSize: 10, color: 'gray', paddingLeft: 10, paddingTop: 5,}}>Fuel Price</Text>
+      <Text style={{fontSize: 10, color: '#081C15', paddingLeft: 10,}}>Fuel Price</Text>
       <Input
         placeholder='Enter Fuel Price'
         keyboardType='numeric'
@@ -144,7 +149,7 @@ const CalcScreen = ({ route, navigation }) => {
         errorMessage = {stateErrors.price}
         errorStyle={{ color: 'red' }}
       />
-      <Text style={{fontSize: 10, color: 'gray', paddingLeft: 10, paddingTop: 5,}}>Fuel Tank Size</Text>
+      <Text style={{fontSize: 10, color: '#081C15', paddingLeft: 10,}}>Fuel Tank Size</Text>
       <Input
         placeholder='Enter Fuel Tank Size'
         keyboardType='numeric'
@@ -153,9 +158,9 @@ const CalcScreen = ({ route, navigation }) => {
         errorMessage = {stateErrors.size}
         errorStyle={{ color: 'red' }}
       />
-      <Text style={{fontSize: 10, color: 'gray', paddingLeft: 10, paddingTop: 5,}}>Route Distance</Text>
+      <Text style={{fontSize: 10, color: '#081C15', paddingLeft: 10,}}>Route Distance</Text>
       <Input
-        placeholder='Enter Route Distance'
+        placeholder='Enter Route Distance (miles)'
         keyboardType='numeric'
         value={state.route}
         onChangeText={(val) => updateStateObject({route: val})}
@@ -214,13 +219,14 @@ const styles = StyleSheet.create({
     paddingRight : 10,
   }, 
   CalcResults: {
-    margin: 20,
-    alignItems: 'center',
+    padding: 5,
+    alignItems: 'left',
   }, 
   resultsText: {
-    padding: 10,
-    fontSize: 18,
+    padding: 5,
+    fontSize: 16,
     fontWeight: 'bold',
+    color: '#2D6A4F'
   }
 });
 
