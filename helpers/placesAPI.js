@@ -19,7 +19,6 @@ PlacesServer.interceptors.request.use(
 
 export const getGasStations = async (callback, lat, lon) => {
     const response = await PlacesServer.get(
-        `?location=42.79911023812465,-86.01568714874405&radius=5000&type=gas_station&key=AIzaSyCvJu-pHPSL0_CrnItqE-jPXIrYkwdX1Ss`
         //`?location=${lat},${lon}&radius=5000&type=gas_station&key=${places_api_key}`
     );
     console.log(response.data);
