@@ -3,10 +3,13 @@ import { Keyboard, StyleSheet, Text, ActivityIndicator, ScrollView, StatusBar, M
 import React, { useState, useEffect, Component } from "react";
 import { TouchableOpacity, FlatList } from "react-native-gesture-handler";
 import Unorderedlist from 'react-native-unordered-list';
+import Device from 'expo-device';
+import * as Location from 'expo-location';
 
 
 import { storeHistoryItem, setupHistoryListener, initHistoryDB } from "../helpers/firebase-fs.js"
 import { getNews } from "../helpers/news.js";
+import { getGasStations } from "../helpers/placesAPI.js";
 
 const HomeScreen = ({ route, navigation }) => {
 
@@ -18,14 +21,53 @@ const [modalGuideVisible, setGuideModalVisible] = useState(false);
 //Use States for News API
 const [newsData, setNewsData] = useState([]);
 
-//UseEffect to Load in News API Data // Curently doesn't console log data
+//states for location 
+const [currentLat, setCurrentLat] = useState();
+const [currentLon, setCurrentLon] = useState();
+
+const [location, setLocation] = useState(null);
+const [errorMsg, setErrorMsg] = useState(null);
+
+//Use State for Gas Stations using Google Places API
+const [gasStationData, setGasStationData] = useState([]);
+
+//UseEffect to Load in News API Data
 useEffect(() => {
-  console.log('Inside Use Effect');
-  getNews((data) => {
-    console.log("received: ", data);
-    setNewsData(data.articles);
-  });
+  // getNews((data) => {
+  //   console.log("received News API Data: ", data);
+  //   setNewsData(data.articles);
+  // });
 }, []);
+
+//UseEffect to getDevices Geo Coordinates
+useEffect(() => {
+  (async () => {
+    if (Platform.OS === 'android' && !Device.isDevice) {
+      setErrorMsg(
+        'Oops, this will not work on Snack in an Android Emulator. Try it on your device!'
+      );
+      return;
+    }
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation(location);
+  })();
+}, []);
+
+let text = 'Waiting...';
+if (errorMsg) {
+  text = errorMsg;
+} else if (location) {
+  //text = JSON.stringify(location);
+  setCurrentLat(location.coords.latitude);
+  setCurrentLon(location.coords.longitude);
+}
+
 
 
 //Must fix
@@ -147,7 +189,7 @@ const renderNews = ( { index, data}) => {
             <View style={styles.modalView}>
               <Text style={styles.modalTextTitle}>Fuel Nearby</Text>
               <View style={styles.modalContentBox}>
-                  <Text> Lorem Ipsum</Text>
+                  <Text style={styles.paragraph}>{text}</Text>
                 </View>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
@@ -235,7 +277,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   modalContentBox: {
-  }
+  }, 
+  paragraph: {
+    fontSize: 18,
+    textAlign: 'center',
+  },
 });
 
 export default HomeScreen;

@@ -119,15 +119,6 @@ const CalcScreen = ({ route, navigation }) => {
     Keyboard.dismiss()
   }
 
-  function renderResults() {
-    return (
-    <View style={styles.CalcResultsBox}>
-      <Text style={styles.resultsTitle}>{state.routeDets}</Text>
-      <Text style={styles.resultsText}>{state.calcResults}</Text>
-    </View>
-    );
-  }
-
   return (
     <View>
       <Text style={{fontSize: 10, color: '#081C15', paddingLeft: 10, paddingTop: 5,}}>Route Title</Text>
@@ -197,7 +188,10 @@ const CalcScreen = ({ route, navigation }) => {
           <Text style={styles.btnText}>Clear</Text>
         </TouchableOpacity>
 
-        <View>{renderResults()}</View>
+        <View style={styles.CalcResultsBox}>
+          <Text style={styles.resultsTitle}>{state.routeDets}</Text>
+          <Text style={styles.resultsText}>{state.calcResults}</Text>
+      </View>
 
     </View>
   );
