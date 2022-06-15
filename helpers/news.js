@@ -9,7 +9,7 @@ NewsServer.interceptors.request.use(
     async (config) => {
         //sets header to get JSON data from News API
         config.headers.Accept = 'application/json';
-        console.log(config);
+        //console.log(config);
         return config;
     },
     (err) => {

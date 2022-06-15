@@ -2,6 +2,7 @@ import { Button, Input, Image, ListItem } from "react-native-elements";
 import { Keyboard, StyleSheet, Text, ActivityIndicator, ScrollView, StatusBar, Modal, Pressable, View, Alert} from "react-native";
 import React, { useState, useEffect, Component } from "react";
 import { TouchableOpacity, FlatList } from "react-native-gesture-handler";
+import Unorderedlist from 'react-native-unordered-list';
 
 
 import { storeHistoryItem, setupHistoryListener, initHistoryDB } from "../helpers/firebase-fs.js"
@@ -26,6 +27,8 @@ useEffect(() => {
   });
 }, []);
 
+
+//Must fix
 const renderNews = ( { index, data}) => {
   return (
     <TouchableOpacity>
@@ -56,7 +59,7 @@ const renderNews = ( { index, data}) => {
             style={styles.box}
             onPress={() => {setTrendsModalVisible(true)}}
             >
-            <Text style={styles.boxText}>Fuel Trends</Text>
+            <Text style={styles.boxText}>Fuel Facts</Text>
           </TouchableOpacity>
           <TouchableOpacity 
             style={styles.box}
@@ -78,7 +81,17 @@ const renderNews = ( { index, data}) => {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <Text style={styles.modalTextTitle}>Fuel Tips</Text>
-                <Text>These are fuel tips!</Text>
+              <Text style={{fontSize: 10, color: 'gray', textAlign: 'center'}}>Source: gasbuddy.com/data/tips</Text>
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Avoid High Speeds</Text></Unorderedlist>
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Do Not Accelerate or Brake Hard</Text></Unorderedlist>
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Keep Tires Properly Inflated</Text></Unorderedlist>
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Use A/C Sparingly</Text></Unorderedlist>
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Keep Windows Closed</Text></Unorderedlist>
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Service Vehicle Regularly</Text></Unorderedlist>
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Use Cruise Control</Text></Unorderedlist>
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Avoid Heavy Loads</Text></Unorderedlist>
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Avoid Long Idles</Text></Unorderedlist>
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Purchase a Fuel Efficient Vehicle</Text></Unorderedlist>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setTipsModalVisible(!modalTipsVisible)}
@@ -101,9 +114,14 @@ const renderNews = ( { index, data}) => {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalTextTitle}>Fuel Trends:</Text>
+              <Text style={styles.modalTextTitle}>Fuel Fun Facts</Text>
                 <View style={styles.modalContentBox}>
-                  <Text> Lorem Ipsum</Text>
+                <Text style={{fontSize: 10, color: 'gray', textAlign: 'center'}}>Source: fuelexpress.net/blog/general-information/15-fun-facts-gasoline/</Text>
+                  <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 30}}><Text>Outside of North America, gasoline is commonly referred to as “petrol.”</Text></Unorderedlist>
+                  <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 30}}><Text>When it was first introduced, Ford’s Model T car got a gas mileage of around 25 miles per gallon</Text></Unorderedlist>
+                  <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 30}}><Text>Roughly 19 gallons of gasoline can be refined from a barrel of oil (which contains around 42 gallons of crude oil).</Text></Unorderedlist>
+                  <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 30}}><Text>Drivers in the United States account for around 44% of the world’s gasoline consumption.</Text></Unorderedlist>
+                  <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 30}}><Text>Without added ethanol, a gallon of gasoline produces 19.64 pounds of carbon dioxide when burned. Diesel, on the other hand, produces 22.38 pounds.</Text></Unorderedlist>
                 </View>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
@@ -181,7 +199,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: "#FFF",
     borderRadius: 20,
     padding: 15,
     // alignItems: "center",
@@ -201,6 +219,7 @@ const styles = StyleSheet.create({
     elevation: 2
   },
   buttonClose: {
+    marginTop: 15,
     backgroundColor: "#52B788",
     padding: 10,
   },
@@ -210,6 +229,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   modalTextTitle: {
+    color: '#1B4332',
     textAlign: "center",
     fontSize: 20,
     fontWeight: 'bold',
