@@ -3,6 +3,7 @@ import { Keyboard, StyleSheet, Text, ActivityIndicator, ScrollView, StatusBar, M
 import React, { useState, useEffect, Component } from "react";
 import { TouchableOpacity, FlatList } from "react-native-gesture-handler";
 import Unorderedlist from 'react-native-unordered-list';
+
 import Device from 'expo-device';
 import * as Location from 'expo-location';
 
@@ -21,13 +22,6 @@ const [modalGuideVisible, setGuideModalVisible] = useState(false);
 //Use States for News API
 const [newsData, setNewsData] = useState([]);
 
-//states for location 
-const [currentLat, setCurrentLat] = useState();
-const [currentLon, setCurrentLon] = useState();
-
-const [location, setLocation] = useState(null);
-const [errorMsg, setErrorMsg] = useState(null);
-
 //Use State for Gas Stations using Google Places API
 const [gasStationData, setGasStationData] = useState([]);
 
@@ -39,36 +33,34 @@ useEffect(() => {
   // });
 }, []);
 
-//UseEffect to getDevices Geo Coordinates
-useEffect(() => {
-  (async () => {
-    if (Platform.OS === 'android' && !Device.isDevice) {
-      setErrorMsg(
-        'Oops, this will not work on Snack in an Android Emulator. Try it on your device!'
-      );
-      return;
-    }
-    let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') {
-      setErrorMsg('Permission to access location was denied');
-      return;
-    }
+    //states for location 
+    const [location, setLocation] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
 
-    let location = await Location.getCurrentPositionAsync({});
-    setLocation(location);
-  })();
-}, []);
+    //states for coordinates
+    const [currentLat, setCurrentLat] = useState({lat: ''});
+    const [currentLon, setCurrentLon] = useState({lon: ''});
 
-let text = 'Waiting...';
-if (errorMsg) {
-  text = errorMsg;
-} else if (location) {
-  //text = JSON.stringify(location);
-  setCurrentLat(location.coords.latitude);
-  setCurrentLon(location.coords.longitude);
-}
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS === 'android' && !Device.isDevice) {
+        setErrorMsg(
+          'Oops, this will not work on Snack in an Android Emulator. Try it on your device!'
+        );
+        return;
+      }
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
 
-
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      setCurrentLat(location.coords.latitude);
+      setCurrentLon(location.coords.longitude);
+    })();
+  }, []);
 
 //Must fix
 const renderNews = ( { index, data}) => {
@@ -105,7 +97,14 @@ const renderNews = ( { index, data}) => {
           </TouchableOpacity>
           <TouchableOpacity 
             style={styles.box}
-            onPress={() => {setGuideModalVisible(true)}}
+            onPress={() => {
+              setGuideModalVisible(true)
+              getGasStations((data) => {
+                setGasStationData(data);
+                console.log("----------API DATA------------");
+                console.log("received: ", data);
+              }, currentLat, currentLon);
+            }}
             >
             <Text style={styles.boxText}>Fuel Nearby</Text>
           </TouchableOpacity>
@@ -189,11 +188,14 @@ const renderNews = ( { index, data}) => {
             <View style={styles.modalView}>
               <Text style={styles.modalTextTitle}>Fuel Nearby</Text>
               <View style={styles.modalContentBox}>
-                  <Text style={styles.paragraph}>{text}</Text>
+                  <Text>LOAD API DATA HERE</Text>
                 </View>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
-                onPress={() => setGuideModalVisible(!modalGuideVisible)}
+                onPress={() => {
+                  setGuideModalVisible(!modalGuideVisible)
+
+                }}
               >
                 <Text style={styles.textStyle}>Close</Text>
               </Pressable>
