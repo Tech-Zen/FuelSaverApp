@@ -1,16 +1,16 @@
 import { Button, Input, Image, ListItem } from "react-native-elements";
-import { Keyboard, StyleSheet, Text, ActivityIndicator, ScrollView, StatusBar, Modal, Pressable, View, Alert} from "react-native";
+import { Keyboard, StyleSheet, Text, FlatList, ScrollView, StatusBar, Modal, Pressable, View, Alert} from "react-native";
 import React, { useState, useEffect, Component } from "react";
-import { TouchableOpacity, FlatList } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import Unorderedlist from 'react-native-unordered-list';
-
 import Device from 'expo-device';
 import * as Location from 'expo-location';
-
-
 import { storeHistoryItem, setupHistoryListener, initHistoryDB } from "../helpers/firebase-fs.js"
 import { getNews } from "../helpers/news.js";
 import { getGasStations } from "../helpers/placesAPI.js";
+
+import { places_api_key } from "../private/placesAPIKey.js";
+import { Axios } from "axios";
 
 const HomeScreen = ({ route, navigation }) => {
 
@@ -25,30 +25,31 @@ const [newsData, setNewsData] = useState([]);
 //Use State for Gas Stations using Google Places API
 const [gasStationData, setGasStationData] = useState([]);
 
-//UseEffect to Load in News API Data
-useEffect(() => {
-  // getNews((data) => {
-  //   console.log("received News API Data: ", data);
-  //   setNewsData(data.articles);
-  // });
-}, []);
+//states for location 
+const [location, setLocation] = useState(null);
+const [errorMsg, setErrorMsg] = useState(null);
 
-    //states for location 
-    const [location, setLocation] = useState(null);
-    const [errorMsg, setErrorMsg] = useState(null);
+//states for coordinates
+const [currentLat, setCurrentLat] = useState({lat: ''});
+const [currentLon, setCurrentLon] = useState({lon: ''});
 
-    //states for coordinates
-    const [currentLat, setCurrentLat] = useState({lat: ''});
-    const [currentLon, setCurrentLon] = useState({lon: ''});
+//Load in News API Data - works needs to be rendered into list view
+// useEffect(() => {
+//   getNews((data) => {
+//     console.log("received News API Data: ", data);
+//     setNewsData(data.articles);
+//   });
+// }, []);
 
-  useEffect(() => {
+    //Get Current Device's Location (Lat and Lon)
+    useEffect(() => {
     (async () => {
-      if (Platform.OS === 'android' && !Device.isDevice) {
-        setErrorMsg(
-          'Oops, this will not work on Snack in an Android Emulator. Try it on your device!'
-        );
-        return;
-      }
+      // if (Platform.OS === 'android' && !Device.isDevice) {
+      //   setErrorMsg(
+      //     'Oops, this will not work on Snack in an Android Emulator. Try it on your device!'
+      //   );
+      //   return;
+      // }
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
@@ -60,10 +61,9 @@ useEffect(() => {
       setCurrentLat(location.coords.latitude);
       setCurrentLon(location.coords.longitude);
     })();
-  }, []);
+     }, []);
 
-//Must fix
-const renderNews = ( { index, data}) => {
+const renderNews = ({ index, data}) => {
   return (
     <TouchableOpacity>
       <ListItem key={index}>
@@ -100,9 +100,9 @@ const renderNews = ( { index, data}) => {
             onPress={() => {
               setGuideModalVisible(true)
               getGasStations((data) => {
-                setGasStationData(data);
                 console.log("----------API DATA------------");
                 console.log("received: ", data);
+                setGasStationData(data);
               }, currentLat, currentLon);
             }}
             >
@@ -193,9 +193,7 @@ const renderNews = ( { index, data}) => {
               <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => {
-                  setGuideModalVisible(!modalGuideVisible)
-
-                }}
+                  setGuideModalVisible(!modalGuideVisible)}}
               >
                 <Text style={styles.textStyle}>Close</Text>
               </Pressable>
@@ -207,9 +205,9 @@ const renderNews = ( { index, data}) => {
       <View style={styles.newsContainer}>
           <FlatList 
             data={newsData}
-            keyExtractor={(articles) => articles.source.id}
+            keyExtractor={(articles) => articles.url}
             extraData={newsData}
-            //renderItem={renderNews} 
+            // /renderItem={renderNews} 
           />
       </View>
 

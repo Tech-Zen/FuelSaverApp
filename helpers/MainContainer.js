@@ -24,7 +24,20 @@ function MainContainer() {
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName={homeName}
-        screenOptions={({ route }) => ({
+        
+        screenOptions={({route}) => ({
+          "tabBarActiveTintColor": "#2D6A4F",
+          "tabBarInactiveTintColor": "grey",
+          "tabBarLabelStyle": {
+            "paddingBottom": 10,
+            "fontSize": 10
+          },
+          "tabBarStyle": [
+            {
+              "display": "flex"
+            },
+            null
+          ],
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             let routeName = route.name;
@@ -47,13 +60,14 @@ function MainContainer() {
           },
         })}
         
-        //Deprecated should be replaced with ScreenOptions
-        tabBarOptions={{
-          activeTintColor: '#2D6A4F',
-          inactiveTintColor: 'grey',
-          labelStyle: { paddingBottom: 10, fontSize: 10 },
-          style: { padding: 20, height: 70}
-        }}>
+        // //Deprecated should be replaced with ScreenOptions
+        // tabBarOptions={{
+        //   activeTintColor: '#2D6A4F',
+        //   inactiveTintColor: 'grey',
+        //   labelStyle: { paddingBottom: 10, fontSize: 10 },
+        //   style: { padding: 20, height: 70}
+        // }}
+        >
         
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={calcName} component={CalcScreen} />
