@@ -29,7 +29,7 @@ function MainContainer() {
           "tabBarActiveTintColor": "#2D6A4F",
           "tabBarInactiveTintColor": "grey",
           "tabBarLabelStyle": {
-            "paddingBottom": 10,
+            "paddingBottom": 5,
             "fontSize": 10
           },
           "tabBarStyle": [

@@ -28,10 +28,10 @@ const CalcScreen = ({ route, navigation }) => {
 
   //HistoryScreen useEffects and routing
   useEffect(() => {
-    console.log('inside second use effect')
+    //console.log('inside second use effect')
     //console.log(JSON.stringify(route.params.item));
     if (route.params?.item) {
-      console.log('we are here as well');
+      //console.log('we are here as well');
       //console.log(JSON.stringify(route.params.item));
       setState(route.params.item);
     }

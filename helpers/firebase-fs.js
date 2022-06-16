@@ -27,7 +27,7 @@ export function setupFuelAppListener(updateFunc) {
   const db = getDatabase();
   const reference = ref(db, "fuelAppData/");
   onValue(reference, (snapshot) => {
-    console.log("setupFuelAPpListener fires up with: ", snapshot);
+    //console.log("setupFuelAPpListener fires up with: ", snapshot);
     if (snapshot?.val()) {
       const fbObject = snapshot.val();
       const newArr = [];
