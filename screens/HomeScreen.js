@@ -6,11 +6,7 @@ import Unorderedlist from 'react-native-unordered-list';
 import { getNews } from "../helpers/news.js";
 import { WebView } from "react-native-webview";
  
-
 const HomeScreen = ({ navigation }) => {
-
- const backgroundImage = { img1: require('../assets/gasPumpBackground.png') }
-
 //Use States for Modal Buttons
 const [modalTipsVisible, setTipsModalVisible] = useState(false);
 const [modalTrendsVisible, setTrendsModalVisible] = useState(false);
@@ -43,7 +39,7 @@ const renderNews = ({item, index}) => {
         <ListItem.Content>
           <ListItem.Title style={{fontWeight: 'bold', fontSize: 14}} > {item.title} </ListItem.Title>
         </ListItem.Content>
-        <ListItem.Chevron />
+        <ListItem.Chevron/>
       </ListItem>
     </TouchableOpacity>
   );
@@ -73,23 +69,26 @@ const renderNews = ({item, index}) => {
             onPress={() => {
               setGuideModalVisible(true)}}
             >
-            <Text style={styles.boxText}>Fuel Saver</Text>
+            <Text style={styles.boxText}>Fuel Myths</Text>
           </TouchableOpacity>
       </View>
       </ImageBackground>
           
-      <View>
-          <View style={{width: "100%", alignSelf: 'center', backgroundColor: 'white'}}>
-          <Text style={{fontWeight:'bold', fontSize: 18, color: '#2D6A4F', alignSelf: 'center', padding: 15}}>Fuel News</Text>
-          </View>
-          <FlatList 
-            data={newsData}
-            keyExtractor={(item, index) => 'key' + index}
-            renderItem={renderNews}
+      <View style={{width: "100%", alignSelf: 'center', backgroundColor: 'white'}}>
+        <Text style={{fontWeight:'bold', fontSize: 18, color: '#2D6A4F', alignSelf: 'center', padding: 15}}>Fuel News</Text>
+      </View>
+
+      {/*Flatlist of News*/}
+      <View style={{}}>
+        <FlatList 
+              data={newsData}
+              keyExtractor={(item, index) => 'key' + index}
+              renderItem={renderNews}
+              nestedScrollEnabled={true} 
           />
       </View>
 
-      {/* Wrap in Ternary to troubleshoot*/}
+      {/*Modals Fuel Tips, Fuel Facts, and Fuel Myths*/}
       <View style={styles.centeredView}>
         <Modal
           animationType="slide"
@@ -166,9 +165,29 @@ const renderNews = ({item, index}) => {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalTextTitle}>Fuel Saver</Text>
+              <Text style={styles.modalTextTitle}>Fuel Myths</Text>
               <View style={styles.modalContentBox}>
-                  <Text>text</Text>
+              <Text style={{fontSize: 10, color: 'gray', textAlign: 'center'}}>Source: moneyminiblog.com/save-money/fuel-saving-tips-and-myths/</Text>
+              
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Idling does not waste gas</Text>
+                    <Unorderedlist bulletUnicode={0x2023} color='#40916C'><Text style={{color: 'gray', fontSize: 12}}>Idling consumes about 1/7 gallon of fuel for an hour. If you are going to wait at the parking lot or traffic light for more than 5 minutes, it is better to turn off your engine.</Text></Unorderedlist>
+                </Unorderedlist>
+
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Smaller cars save more on gas</Text>
+                    <Unorderedlist bulletUnicode={0x2023} color='#40916C'><Text style={{color: 'gray', fontSize: 12}}>Newer models have more advanced technologies that are more efficient on fuel. Diesel engines, hybrid drivetrains, direct fuel injection, turbocharging, advanced transmissions, low rolling resistance tires, and aerodynamic designs are very fuel efficient.</Text></Unorderedlist>
+                </Unorderedlist>
+
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Manual transmissions are more economical on fuel</Text>
+                   <Unorderedlist bulletUnicode={0x2023} color='#40916C'><Text style={{color: 'gray', fontSize: 12}}>Automatic transmissions have the cruise control feature which allows your car to adjust depending on your speed. Notice that you don’t have to step on the gas pedal, but the car does not decelerate.</Text></Unorderedlist>
+                </Unorderedlist>
+
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Using neutral saves on gas</Text>
+                    <Unorderedlist bulletUnicode={0x2023} color='#40916C'><Text style={{color: 'gray', fontSize: 12}}>According to an automobile expert, shifting to neutral when approaching a stop will cancel fuel cutoff. It is better to leave the car in gear and let the engine airflow normalize so that fuel cutoff will be enabled.</Text></Unorderedlist>
+                </Unorderedlist>
+
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Fuel additives make your fuel cost efficient</Text>
+                    <Unorderedlist bulletUnicode={0x2023} color='#40916C'><Text style={{color: 'gray', fontSize: 12}}>Idling consumes about 1/7 gallon of fuel for an hour. If you are going to wait at the parking lot or traffic light for more than 5 minutes, it is better to turn off your engine.</Text></Unorderedlist>
+                </Unorderedlist>
                 </View>
               <Pressable
                 style={[styles.button, styles.buttonClose]}

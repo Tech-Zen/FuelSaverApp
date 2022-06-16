@@ -93,7 +93,6 @@ const NearbyFuel = (route) => {
               data={gasStationData}
               keyExtractor={(item, index) => 'key' + index}
               renderItem={renderNearbyGas}
-              //extraData={gasStationData}
               />
             : <View style={styles.loadingAnimation}><ActivityIndicator size="large" color="#2D6A4F"/></View>}
             

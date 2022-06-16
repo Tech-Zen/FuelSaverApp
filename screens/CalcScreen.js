@@ -116,7 +116,7 @@ const CalcScreen = ({ route, navigation }) => {
     const fuelBurned = route / maxDist;
     const total = fuelBurned * tank;
     if (total >= tank) {
-      return `${round(total, 2)} gals. You'll need to fill up again!`
+      return `${round(total, 2)} gal, need more gas!`
     }
     return `${round(total, 2)} gals`
   }
