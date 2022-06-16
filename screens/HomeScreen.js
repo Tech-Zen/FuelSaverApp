@@ -1,11 +1,13 @@
 import { Button, Input, Image, ListItem } from "react-native-elements";
-import { Keyboard, StyleSheet, Text, FlatList, ScrollView, StatusBar, Modal, Pressable, View} from "react-native";
+import { Keyboard, StyleSheet, Text, FlatList, ScrollView, Linking , Modal, Pressable, View} from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Unorderedlist from 'react-native-unordered-list';
 import { getNews } from "../helpers/news.js";
+import { WebView } from "react-native-webview";
+ 
 
-const HomeScreen = ({ route, navigation }) => {
+const HomeScreen = ({ navigation }) => {
 
 //Use States for Modal Buttons
 const [modalTipsVisible, setTipsModalVisible] = useState(false);
@@ -25,7 +27,12 @@ useEffect(() => {
 
 const renderNews = ({item, index}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+    onPress={ async () => {
+      const url = item.url;
+      await Linking.canOpenURL(url)
+      Linking.openURL(url);
+    }}>
       <ListItem key={index}>
         <Image 
           source={{ uri: item.urlToImage }}
@@ -73,6 +80,7 @@ const renderNews = ({item, index}) => {
             data={newsData}
             keyExtractor={(item, index) => 'key' + index}
             renderItem={renderNews}
+            extraData={newsData}
           />
       </View>
 
