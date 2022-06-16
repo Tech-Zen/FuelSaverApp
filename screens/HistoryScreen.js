@@ -1,10 +1,7 @@
-import { Button, Input } from "react-native-elements";
-import { FlatList, Keyboard, StyleSheet, Text, ScrollView } from "react-native";
-import React, { useState, useEffect, useCallback } from "react";
-import { Feather } from '@expo/vector-icons';
+import { FlatList,  StyleSheet, Text} from "react-native";
+import React, { useState, useEffect } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { View } from "react-native";
-import { storeHistoryItem, setupHistoryListener, initHistoryDB } from "../helpers/firebase-fs.js"
 import {
     initFuelSaverDB,
     initFuelSaverAnalytics,
@@ -13,20 +10,17 @@ import {
     updateHistory,
     deleteHistory
 } from "../helpers/firebase-fs";
-import { ToastContainer } from "react-native-root-toast";
-
 
 const HistoryScreen = ({ route, navigation }) => {
     const [state, setState] = useState([]);
 
     useEffect(() => {
         setupFuelAppListener((item) => {
-            console.log(item)
             setState(item)
         });
     }, []);
 
-    const renderReminder = ({ item }) => {
+    const renderHistory = ({ item }) => {
         return (
             <TouchableOpacity styles={{borderRadius: 10,}} onLongPress={() => navigation.navigate("Fuel Calculator", { item })}>
                 <View style = {styles.HistoryBox}>
@@ -42,10 +36,23 @@ const HistoryScreen = ({ route, navigation }) => {
     }
 
     return (
+
         <View style={styles.container}>
+            {/* <TouchableOpacity
+             onLongPress={() => {
+                console.log(state);
+                deleteHistory(state.key);
+                setState([]);
+             }}>
+                <View style={styles.buttons}>
+                    <Text 
+                    style={styles.btnText}
+                    >Clear History</Text>
+                </View>
+            </TouchableOpacity> */}
             <FlatList 
                 data={state}
-                renderItem={renderReminder}
+                renderItem={renderHistory}
             />
         </View>
     );
@@ -58,12 +65,12 @@ const styles = StyleSheet.create({
     },
     cordinates: {
         color: "#081C15",
-        fontSize: 20,
+        fontSize: 12,
         paddingLeft: 10,
-        paddingTop: 10,
+        paddingTop: 5,
     },
     HistoryBox: {
-        backgroundColor: '#B7E4C7',
+        backgroundColor: '#FFF',
         borderRadius: 20,
         margin: 10,
         shadowColor: "#000",
@@ -83,6 +90,24 @@ const styles = StyleSheet.create({
         paddingRight: 15,
         paddingBottom: 5,
     },
+    buttons: {
+        marginRight: 50,
+        marginLeft: 50,
+        marginTop: 10,
+        paddingTop: 10,
+        paddingBottom: 10,
+        backgroundColor: '#52B788',
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: '#fff'
+      },
+      btnText: {
+        color: '#fff',
+        fontSize: 20,
+        textAlign: 'center',
+        paddingLeft: 10,
+        paddingRight: 10,
+      },
 
 });
 

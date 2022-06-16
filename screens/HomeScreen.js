@@ -28,7 +28,7 @@ useEffect(() => {
 const renderNews = ({item, index}) => {
   return (
     <TouchableOpacity
-    onPress={ async () => {
+    onLongPress={ async () => {
       const url = item.url;
       await Linking.canOpenURL(url)
       Linking.openURL(url);
