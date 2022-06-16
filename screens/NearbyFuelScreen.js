@@ -8,7 +8,7 @@ import { storeHistoryItem, setupHistoryListener, initHistoryDB} from "../helpers
 //import DropDownPicker from 'react-native-dropdown-picker';
 
 
-const GarageScreen = (route) => {
+const NearbyFuel = (route) => {
     const [vehicle, setVehicle] = useState([]);
 
     return (
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
     
 });
 
-export default GarageScreen;
+export default NearbyFuel;

@@ -1,5 +1,5 @@
 import { Button, Input } from "react-native-elements";
-import { FlatList, Keyboard, StyleSheet, Text } from "react-native";
+import { FlatList, Keyboard, StyleSheet, Text, ScrollView } from "react-native";
 import React, { useState, useEffect, useCallback } from "react";
 import { Feather } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -13,6 +13,7 @@ import {
     updateHistory,
     deleteHistory
 } from "../helpers/firebase-fs";
+import { ToastContainer } from "react-native-root-toast";
 
 
 const HistoryScreen = ({ route, navigation }) => {
@@ -25,9 +26,9 @@ const HistoryScreen = ({ route, navigation }) => {
         });
     }, []);
 
-    const renderReminder = ({ index, item }) => {
+    const renderReminder = ({ item }) => {
         return (
-            <TouchableOpacity onPress={() => navigation.navigate("Fuel Calculator", { item })}>
+            <TouchableOpacity styles={{borderRadius: 10,}} onLongPress={() => navigation.navigate("Fuel Calculator", { item })}>
                 <View style = {styles.HistoryBox}>
                     <Text style={styles.cordinates}> {`Route Title: ${item.routeTitle}`}</Text>
                     <Text style={styles.cordinates}> {`Vehicles Combined MPG: ${item.mpg}`}</Text>
@@ -36,21 +37,15 @@ const HistoryScreen = ({ route, navigation }) => {
                     <Text style={styles.cordinates}> {`Route Distance: ${item.route}`}</Text>
                     <Text style={styles.timestamp}> {`${item.DT}`}</Text>
                 </View>
-            </TouchableOpacity >
+            </TouchableOpacity>
         );
-    }
-    const line = () => {
-        return (
-            <View style={styles.line} />
-        )
     }
 
     return (
         <View style={styles.container}>
-            <FlatList
+            <FlatList 
                 data={state}
                 renderItem={renderReminder}
-                //ItemSeparatorComponent={line}
             />
         </View>
     );
@@ -58,8 +53,8 @@ const HistoryScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#FFF',
+       width: '90%',
+       alignSelf: 'center'
     },
     cordinates: {
         color: "#081C15",
@@ -80,11 +75,6 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5
     },
-    line: {
-        height: 1,
-        width: "100%",
-        backgroundColor: "black"
-    },
     timestamp: {
         fontSize: 11,
         fontStyle: "italic",
@@ -92,7 +82,8 @@ const styles = StyleSheet.create({
         color: 'gray',
         paddingRight: 15,
         paddingBottom: 5,
-    }
+    },
+
 });
 
 export default HistoryScreen;
