@@ -1,16 +1,9 @@
 import { Button, Input, Image, ListItem } from "react-native-elements";
-import { Keyboard, StyleSheet, Text, FlatList, ScrollView, StatusBar, Modal, Pressable, View, Alert} from "react-native";
-import React, { useState, useEffect, Component } from "react";
+import { Keyboard, StyleSheet, Text, FlatList, ScrollView, StatusBar, Modal, Pressable, View} from "react-native";
+import React, { useState, useEffect, useContext } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Unorderedlist from 'react-native-unordered-list';
-import Device from 'expo-device';
-import * as Location from 'expo-location';
-import { storeHistoryItem, setupHistoryListener, initHistoryDB } from "../helpers/firebase-fs.js"
 import { getNews } from "../helpers/news.js";
-import { getGasStations } from "../helpers/placesAPI.js";
-
-import { places_api_key } from "../private/placesAPIKey.js";
-import { Axios } from "axios";
 
 const HomeScreen = ({ route, navigation }) => {
 
@@ -22,63 +15,33 @@ const [modalGuideVisible, setGuideModalVisible] = useState(false);
 //Use States for News API
 const [newsData, setNewsData] = useState([]);
 
-//Use State for Gas Stations using Google Places API
-const [gasStationData, setGasStationData] = useState([]);
-
-//states for location 
-const [location, setLocation] = useState(null);
-const [errorMsg, setErrorMsg] = useState(null);
-
-//states for coordinates
-const [currentLat, setCurrentLat] = useState({lat: ''});
-const [currentLon, setCurrentLon] = useState({lon: ''});
-
 //Load in News API Data - works needs to be rendered into list view
-// useEffect(() => {
-//   getNews((data) => {
-//     console.log("received News API Data: ", data);
-//     setNewsData(data.articles);
-//   });
-// }, []);
+useEffect(() => {
+  getNews((data) => {
+    //console.log("received News API Data: ", data);
+    setNewsData(data.articles);
+  });
+}, []);
 
-    //Get Current Device's Location (Lat and Lon)
-    useEffect(() => {
-    (async () => {
-      // if (Platform.OS === 'android' && !Device.isDevice) {
-      //   setErrorMsg(
-      //     'Oops, this will not work on Snack in an Android Emulator. Try it on your device!'
-      //   );
-      //   return;
-      // }
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-      setCurrentLat(location.coords.latitude);
-      setCurrentLon(location.coords.longitude);
-    })();
-     }, []);
-
-const renderNews = ({ index, data}) => {
+const renderNews = ({item}) => {
+  console.log(`Item is ${item}`);
+  console.log(`Title is ${item.title}`);
   return (
-    <TouchableOpacity>
-      <ListItem key={index}>
-        <Image 
-          source={{ uri: data.articles.urlToImage }}
-          style={{ width: 100, height: 55 }}
-        />
-        <ListItem.Content>
-          <ListItem.Title> {data.articles.title} </ListItem.Title>
-        </ListItem.Content>
-        <ListItem.Chevron />
-      </ListItem>
-    </TouchableOpacity>
+    <Text>{item.title}</Text>
+    // <TouchableOpacity>
+    //   <ListItem key={index}>
+    //     <Image 
+    //       source={{ uri: item.urlToImage }}
+    //       style={{ width: 100, height: 55 }}
+    //     />
+    //     <ListItem.Content>
+    //       <ListItem.Title> {item.title} </ListItem.Title>
+    //     </ListItem.Content>
+    //     <ListItem.Chevron />
+    //   </ListItem>
+    // </TouchableOpacity>
   );
-}
+};
 
   return (
     <View>
@@ -98,15 +61,9 @@ const renderNews = ({ index, data}) => {
           <TouchableOpacity 
             style={styles.box}
             onPress={() => {
-              setGuideModalVisible(true)
-              getGasStations((data) => {
-                console.log("----------API DATA------------");
-                console.log("received: ", data);
-                setGasStationData(data);
-              }, currentLat, currentLon);
-            }}
+              setGuideModalVisible(true)}}
             >
-            <Text style={styles.boxText}>Fuel Nearby</Text>
+            <Text style={styles.boxText}>Fuel Saver</Text>
           </TouchableOpacity>
       </View>
 
@@ -186,9 +143,9 @@ const renderNews = ({ index, data}) => {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalTextTitle}>Fuel Nearby</Text>
+              <Text style={styles.modalTextTitle}>Fuel Saver</Text>
               <View style={styles.modalContentBox}>
-                  <Text>LOAD API DATA HERE</Text>
+                  <Text>text</Text>
                 </View>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
@@ -202,12 +159,11 @@ const renderNews = ({ index, data}) => {
         </Modal>
       </View>
     
-      <View style={styles.newsContainer}>
+      <View style={{backgroundColor: 'black'}}>
           <FlatList 
             data={newsData}
-            keyExtractor={(articles) => articles.url}
-            extraData={newsData}
-            // /renderItem={renderNews} 
+            keyExtractor={(item, index) => 'key' + index}
+            renderItem={renderNews}
           />
       </View>
 

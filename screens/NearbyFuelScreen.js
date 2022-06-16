@@ -4,21 +4,48 @@ import React, { useState, useEffect } from "react";
 import { Feather } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { View } from "react-native";
-import { storeHistoryItem, setupHistoryListener, initHistoryDB} from "../helpers/firebase-fs.js"
-//import DropDownPicker from 'react-native-dropdown-picker';
 
+import { getGasStations } from "../helpers/placesAPI.js";
+import Device from 'expo-device';
+import * as Location from 'expo-location';
 
 const NearbyFuel = (route) => {
-    const [vehicle, setVehicle] = useState([]);
+
+  //Use State for Gas Stations using Google Places API
+  const [gasStationData, setGasStationData] = useState([]);
+
+  //states for location 
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  //states for coordinates
+  const [currentLat, setCurrentLat] = useState({lat: ''});
+  const [currentLon, setCurrentLon] = useState({lon: ''});
+
+    //Get Current Device's Location (Lat and Lon)
+    useEffect(() => {
+      (async () => {
+        // if (Platform.OS === 'android' && !Device.isDevice) {
+        //   setErrorMsg(
+        //     'Oops, this will not work on Snack in an Android Emulator. Try it on your device!'
+        //   );
+        //   return;
+        // }
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          setErrorMsg('Permission to access location was denied');
+          return;
+        }
+  
+        let location = await Location.getCurrentPositionAsync({});
+        setLocation(location);
+        setCurrentLat(location.coords.latitude);
+        setCurrentLon(location.coords.longitude);
+      })();
+       }, []);
 
     return (
-       <View>
-        <TouchableOpacity 
-            style={styles.Button}
-            onPress={() => {setVehicle()}}
-            >
-            <Text style={styles.buttonText}>Add Vehicle</Text>
-          </TouchableOpacity>
+       <View style={styles.container}>
         
       </View>
 
@@ -28,26 +55,7 @@ const NearbyFuel = (route) => {
 
 const styles = StyleSheet.create({
     container: {
-    },
-    Button: { 
-        marginRight: 50,
-        marginLeft: 50,
-        marginTop: 10,
-        paddingTop: 10,
-        paddingBottom: 10,
-        backgroundColor:'#52B788',
-        borderRadius: 20,
-        borderWidth: 1,
-        borderColor: '#fff'
-      },
-      buttonText: {
-        color:'#fff',
-        fontSize: 20,
-        textAlign:'center',
-        paddingLeft : 10,
-        paddingRight : 10,
-      },
-    
+    },    
 });
 
 export default NearbyFuel;
