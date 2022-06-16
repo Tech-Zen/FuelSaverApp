@@ -44,7 +44,7 @@ function MainContainer() {
 
             if (routeName === homeName) {
               iconName = focused ? 'home' : 'home';
-
+              
             } else if (routeName === calcName) {
               iconName = focused ? 'calculator' : 'calculator';
 
@@ -59,14 +59,6 @@ function MainContainer() {
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}
-        
-        // //Deprecated should be replaced with ScreenOptions
-        // tabBarOptions={{
-        //   activeTintColor: '#2D6A4F',
-        //   inactiveTintColor: 'grey',
-        //   labelStyle: { paddingBottom: 10, fontSize: 10 },
-        //   style: { padding: 20, height: 70}
-        // }}
         >
         
         <Tab.Screen name={homeName} component={HomeScreen} />

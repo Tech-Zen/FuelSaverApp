@@ -28,12 +28,14 @@ const HistoryScreen = ({ route, navigation }) => {
     const renderReminder = ({ index, item }) => {
         return (
             <TouchableOpacity onPress={() => navigation.navigate("Fuel Calculator", { item })}>
-                <Text style={styles.cordinates}> {`Route Title: ${item.routeTitle}`}</Text>
-                <Text style={styles.cordinates}> {`Vehicles Combined MPG: ${item.mpg}`}</Text>
-                <Text style={styles.cordinates}> {`Fuel Price: ${item.price}`}</Text>
-                <Text style={styles.cordinates}> {`Fuel Tank Size: ${item.size}`}</Text>
-                <Text style={styles.cordinates}> {`Route Distance: ${item.route}`}</Text>
-                <Text style={styles.timestamp}> {`${item.DT}`}</Text>
+                <View style = {styles.HistoryBox}>
+                    <Text style={styles.cordinates}> {`Route Title: ${item.routeTitle}`}</Text>
+                    <Text style={styles.cordinates}> {`Vehicles Combined MPG: ${item.mpg}`}</Text>
+                    <Text style={styles.cordinates}> {`Fuel Price: ${item.price}`}</Text>
+                    <Text style={styles.cordinates}> {`Fuel Tank Size: ${item.size}`}</Text>
+                    <Text style={styles.cordinates}> {`Route Distance: ${item.route}`}</Text>
+                    <Text style={styles.timestamp}> {`${item.DT}`}</Text>
+                </View>
             </TouchableOpacity >
         );
     }
@@ -48,7 +50,7 @@ const HistoryScreen = ({ route, navigation }) => {
             <FlatList
                 data={state}
                 renderItem={renderReminder}
-                ItemSeparatorComponent={line}
+                //ItemSeparatorComponent={line}
             />
         </View>
     );
@@ -57,11 +59,26 @@ const HistoryScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ADD8E6',
+        backgroundColor: '#FFF',
     },
     cordinates: {
-        color: "black",
-        fontSize: 20
+        color: "#081C15",
+        fontSize: 20,
+        paddingLeft: 10,
+        paddingTop: 10,
+    },
+    HistoryBox: {
+        backgroundColor: '#B7E4C7',
+        borderRadius: 20,
+        margin: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
     },
     line: {
         height: 1,
@@ -72,8 +89,9 @@ const styles = StyleSheet.create({
         fontSize: 11,
         fontStyle: "italic",
         textAlign: "right",
-        paddingRight: 5
-
+        color: 'gray',
+        paddingRight: 15,
+        paddingBottom: 5,
     }
 });
 
