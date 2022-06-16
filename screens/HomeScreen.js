@@ -23,28 +23,26 @@ useEffect(() => {
   });
 }, []);
 
-const renderNews = ({item}) => {
-  console.log(`Item is ${item}`);
-  console.log(`Title is ${item.title}`);
+const renderNews = ({item, index}) => {
   return (
-    <Text>{item.title}</Text>
-    // <TouchableOpacity>
-    //   <ListItem key={index}>
-    //     <Image 
-    //       source={{ uri: item.urlToImage }}
-    //       style={{ width: 100, height: 55 }}
-    //     />
-    //     <ListItem.Content>
-    //       <ListItem.Title> {item.title} </ListItem.Title>
-    //     </ListItem.Content>
-    //     <ListItem.Chevron />
-    //   </ListItem>
-    // </TouchableOpacity>
+    <TouchableOpacity>
+      <ListItem key={index}>
+        <Image 
+          source={{ uri: item.urlToImage }}
+          style={{ width: 100, height: 55, borderRadius: 5}}
+        />
+        <ListItem.Content>
+          <ListItem.Title style={{fontWeight: 'bold', fontSize: 14}} > {item.title} </ListItem.Title>
+        </ListItem.Content>
+        <ListItem.Chevron />
+      </ListItem>
+    </TouchableOpacity>
   );
 };
 
   return (
     <View>
+        
       <View style={styles.topContainer}>
           <TouchableOpacity 
             style={styles.box}
@@ -65,6 +63,17 @@ const renderNews = ({item}) => {
             >
             <Text style={styles.boxText}>Fuel Saver</Text>
           </TouchableOpacity>
+      </View>
+          
+      <View>
+          <View style={{width: "100%", alignSelf: 'center', borderTopRightRadius: 30, borderTopLeftRadius: 30, backgroundColor: '#FFF'}}>
+          <Text style={{fontWeight:'bold', fontSize: 18, color: '#52B788', alignSelf: 'center', padding: 15}}>Fuel News</Text>
+          </View>
+          <FlatList 
+            data={newsData}
+            keyExtractor={(item, index) => 'key' + index}
+            renderItem={renderNews}
+          />
       </View>
 
       <View style={styles.centeredView}>
@@ -158,14 +167,6 @@ const renderNews = ({item}) => {
           </View>
         </Modal>
       </View>
-    
-      <View style={{backgroundColor: 'black'}}>
-          <FlatList 
-            data={newsData}
-            keyExtractor={(item, index) => 'key' + index}
-            renderItem={renderNews}
-          />
-      </View>
 
     </View>
   )
@@ -200,15 +201,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     borderRadius: 20,
     padding: 15,
-    // alignItems: "center",
-    // justifyContent: 'center',
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    shadowOpacity: 1,
+    shadowRadius: 300,
     elevation: 5
   },
   button: {
