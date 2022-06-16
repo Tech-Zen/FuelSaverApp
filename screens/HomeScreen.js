@@ -1,5 +1,5 @@
 import { Button, Input, Image, ListItem } from "react-native-elements";
-import { Keyboard, StyleSheet, Text, FlatList, ScrollView, Linking , Modal, Pressable, View} from "react-native";
+import { Keyboard, StyleSheet, Text, FlatList, ScrollView, Linking , Modal, Pressable, View, ImageBackground} from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Unorderedlist from 'react-native-unordered-list';
@@ -8,6 +8,8 @@ import { WebView } from "react-native-webview";
  
 
 const HomeScreen = ({ navigation }) => {
+
+ const backgroundImage = { img1: require('../assets/gasPumpBackground.png') }
 
 //Use States for Modal Buttons
 const [modalTipsVisible, setTipsModalVisible] = useState(false);
@@ -186,6 +188,7 @@ const styles = StyleSheet.create({
   topContainer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+    background: backgroundImage,
   },
   box: { 
     padding: 20,

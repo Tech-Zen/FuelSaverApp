@@ -1,5 +1,6 @@
-import { FlatList,  StyleSheet, Text} from "react-native";
+import { StyleSheet, Text} from "react-native";
 import React, { useState, useEffect } from "react";
+import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { View } from "react-native";
 import {
@@ -50,10 +51,10 @@ const HistoryScreen = ({ route, navigation }) => {
                     >Clear History</Text>
                 </View>
             </TouchableOpacity> */}
-            <FlatList 
-                data={state}
-                renderItem={renderHistory}
-            />
+                <FlatList 
+                    data={state}
+                    renderItem={renderHistory}
+                />
         </View>
     );
 }
@@ -61,7 +62,8 @@ const HistoryScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
        width: '90%',
-       alignSelf: 'center'
+       alignSelf: 'center',
+       flex: 1,
     },
     cordinates: {
         color: "#081C15",
