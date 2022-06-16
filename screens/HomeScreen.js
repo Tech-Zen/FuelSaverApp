@@ -51,7 +51,10 @@ const renderNews = ({item, index}) => {
 
   return (
     <View>
-        
+      <ImageBackground
+      source={require('../assets/gasPumpBackground.png')}
+      style={{}}>
+
       <View style={styles.topContainer}>
           <TouchableOpacity 
             style={styles.box}
@@ -73,10 +76,11 @@ const renderNews = ({item, index}) => {
             <Text style={styles.boxText}>Fuel Saver</Text>
           </TouchableOpacity>
       </View>
+      </ImageBackground>
           
       <View>
-          <View style={{width: "100%", alignSelf: 'center', borderTopRightRadius: 30, borderTopLeftRadius: 30, backgroundColor: '#FFF'}}>
-          <Text style={{fontWeight:'bold', fontSize: 18, color: '#52B788', alignSelf: 'center', padding: 15}}>Fuel News</Text>
+          <View style={{width: "100%", alignSelf: 'center', backgroundColor: 'white'}}>
+          <Text style={{fontWeight:'bold', fontSize: 18, color: '#2D6A4F', alignSelf: 'center', padding: 15}}>Fuel News</Text>
           </View>
           <FlatList 
             data={newsData}
@@ -188,7 +192,6 @@ const styles = StyleSheet.create({
   topContainer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    background: backgroundImage,
   },
   box: { 
     padding: 20,
