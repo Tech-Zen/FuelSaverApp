@@ -1,13 +1,13 @@
-import { Button, Input, ListItem, Image } from "react-native-elements";
-import { Keyboard, StyleSheet, Text, Modal, Pressable, FlatList, Linking } from "react-native";
+import { ListItem, Image } from "react-native-elements";
+import { Keyboard, StyleSheet, Text, Modal, Pressable, FlatList, Linking, ActivityIndicator } from "react-native";
 import React, { useState, useEffect } from "react";
-import { Feather } from '@expo/vector-icons';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { View } from "react-native";
-import { getGasStations } from "../helpers/placesAPI.js";
+//import { getGasStations } from "../helpers/placesAPI.js";
 import Device from 'expo-device';
 import * as Location from 'expo-location';
 import { places_api_key } from "../private/placesAPIKey.js";
+import { Center } from "native-base";
 
 const NearbyFuel = (route) => {
 
@@ -38,25 +38,27 @@ const NearbyFuel = (route) => {
       })();
        }, []);
 
-        useEffect(() => {
-          //Fetch API Data from Places
-          var axios = require('axios');
-
-          var config = {
-              method: 'get',
-              url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${currentLat},${currentLon}&radius=5000&type=gas_station&key=${places_api_key}`,
-              headers: { }
-          };
-          axios(config)
-          .then(function (response) {
-            setGasStationData(response.data.results);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-          }, []);
+      useEffect(() => {
+        console.log(currentLat, currentLon);
+        //Fetch API Data from Places
+        var axios = require('axios');
+    
+        var config = {
+            method: 'get',
+            url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${currentLat},${currentLon}&radius=5000&type=gas_station&key=${places_api_key}`,
+            headers: {}
+        };
+        axios(config)
+        .then(function (response) {
+          setGasStationData(response.data.results);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        }, [currentLat, currentLon]);
 
        const renderNearbyGas = ({item, index}) => {
+
         return (
           <TouchableOpacity
           onLongPress={ async () => {
@@ -87,21 +89,26 @@ const NearbyFuel = (route) => {
 
     return (
        <View style={styles.container}>
-          <View>
-            <FlatList 
+        {gasStationData.length > 0 ? <FlatList 
               data={gasStationData}
               keyExtractor={(item, index) => 'key' + index}
               renderItem={renderNearbyGas}
-              extraData={gasStationData}
+              //extraData={gasStationData}
               />
-          </View>
+            : <View style={styles.loadingAnimation}><ActivityIndicator size="large" color="#2D6A4F"/></View>}
+            
       </View>
 );
 }
 
 const styles = StyleSheet.create({
     container: {
+      flex: 1,
     },    
+    loadingAnimation: {
+      alignSelf: 'center',
+      marginTop: '70%',
+    },
 });
 
 export default NearbyFuel;

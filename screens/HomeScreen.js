@@ -80,10 +80,10 @@ const renderNews = ({item, index}) => {
             data={newsData}
             keyExtractor={(item, index) => 'key' + index}
             renderItem={renderNews}
-            extraData={newsData}
           />
       </View>
 
+      {/* Wrap in Ternary to troubleshoot*/}
       <View style={styles.centeredView}>
         <Modal
           animationType="slide"
