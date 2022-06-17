@@ -1,13 +1,9 @@
 import { ListItem, Image } from "react-native-elements";
-import { Keyboard, StyleSheet, Text, Modal, Pressable, FlatList, Linking, ActivityIndicator, TouchableOpacity} from "react-native";
+import { StyleSheet, FlatList, Linking, ActivityIndicator, TouchableOpacity} from "react-native";
 import React, { useState, useEffect } from "react";
-//import { TouchableOpacity } from "react-native-gesture-handler";
 import { View } from "react-native";
-//import { getGasStations } from "../helpers/placesAPI.js";
-import Device from 'expo-device';
 import * as Location from 'expo-location';
 import { places_api_key } from "../private/placesAPIKey.js";
-import { Center } from "native-base";
 
 //Import Analytics
 import * as Analytics from 'expo-firebase-analytics';

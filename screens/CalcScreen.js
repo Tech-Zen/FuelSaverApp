@@ -4,12 +4,7 @@ import React, { useState, useEffect } from "react";
 //import { TouchableOpacity } from "react-native-gesture-handler";
 //firebase imports
 import {
-  initFuelSaverDB,
-  initFuelSaverAnalytics,
   storeFuelAppItem,
-  setupFuelAppListener,
-  updateHistory,
-  deleteHistory
 } from "../helpers/firebase-fs";
 import moment from 'moment';
 
@@ -17,7 +12,7 @@ import moment from 'moment';
 import * as Analytics from 'expo-firebase-analytics';
 import { currentUserID } from "../private/genUUID.js";
 
-const CalcScreen = ({ route, navigation }) => {
+const CalcScreen = ({ route }) => {
   //Size = TankSize
   const [state, setState] = useState({ mpg: '', price: '', size: '', route: '', calcResults: '', routeTitle: '', routeDets: '' });
   const [stateErrors, setStateErrors] = useState({});
