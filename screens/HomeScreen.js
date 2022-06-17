@@ -1,5 +1,5 @@
 import { Button, Input, Image, ListItem } from "react-native-elements";
-import { Keyboard, StyleSheet, Text, FlatList, ScrollView, Linking , Modal, Pressable, View, ImageBackground, TouchableOpacity} from "react-native";
+import { Keyboard, StyleSheet, Text, FlatList, ScrollView, Linking , Modal, Pressable, View, ImageBackground, TouchableOpacity, ActivityIndicator} from "react-native";
 import React, { useState, useEffect, useContext, useId } from "react";
 //import { TouchableOpacity } from "react-native-gesture-handler";
 import Unorderedlist from 'react-native-unordered-list';
@@ -89,12 +89,12 @@ const renderNews = ({item, index}) => {
 
       {/*Flatlist of News*/}
       <View style={{}}>
-        <FlatList 
+      {newsData.length > 0 ? <FlatList 
               data={newsData}
               keyExtractor={(item, index) => 'key' + index}
               renderItem={renderNews}
               nestedScrollEnabled={true} 
-          />
+          /> : <View style={styles.loadingAnimation}><ActivityIndicator size="large" color="#2D6A4F"/></View>}
       </View>
 
       {/*Modals Fuel Tips, Fuel Facts, and Fuel Myths*/}
@@ -178,23 +178,15 @@ const renderNews = ({item, index}) => {
               <View style={styles.modalContentBox}>
               <Text style={{fontSize: 10, color: 'gray', textAlign: 'center'}}>Source: moneyminiblog.com/save-money/fuel-saving-tips-and-myths/</Text>
               
-                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Idling does not waste gas</Text>
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 15, marginBottom: 5}}><Text>Idling does not waste gas</Text>
                     <Unorderedlist bulletUnicode={0x2023} color='#40916C'><Text style={{color: 'gray', fontSize: 12}}>Idling consumes about 1/7 gallon of fuel for an hour. If you are going to wait at the parking lot or traffic light for more than 5 minutes, it is better to turn off your engine.</Text></Unorderedlist>
                 </Unorderedlist>
 
-                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Smaller cars save more on gas</Text>
-                    <Unorderedlist bulletUnicode={0x2023} color='#40916C'><Text style={{color: 'gray', fontSize: 12}}>Newer models have more advanced technologies that are more efficient on fuel. Diesel engines, hybrid drivetrains, direct fuel injection, turbocharging, advanced transmissions, low rolling resistance tires, and aerodynamic designs are very fuel efficient.</Text></Unorderedlist>
-                </Unorderedlist>
-
-                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Manual transmissions are more economical on fuel</Text>
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 15, marginBottom: 5}}><Text>Manual transmissions are more economical on fuel</Text>
                    <Unorderedlist bulletUnicode={0x2023} color='#40916C'><Text style={{color: 'gray', fontSize: 12}}>Automatic transmissions have the cruise control feature which allows your car to adjust depending on your speed. Notice that you don’t have to step on the gas pedal, but the car does not decelerate.</Text></Unorderedlist>
                 </Unorderedlist>
 
-                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Using neutral saves on gas</Text>
-                    <Unorderedlist bulletUnicode={0x2023} color='#40916C'><Text style={{color: 'gray', fontSize: 12}}>According to an automobile expert, shifting to neutral when approaching a stop will cancel fuel cutoff. It is better to leave the car in gear and let the engine airflow normalize so that fuel cutoff will be enabled.</Text></Unorderedlist>
-                </Unorderedlist>
-
-                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 16, marginBottom: 5}}><Text>Fuel additives make your fuel cost efficient</Text>
+                <Unorderedlist bulletUnicode={0x2023} color='#40916C' style={{ fontSize: 15, marginBottom: 5}}><Text>Fuel additives make your fuel cost efficient</Text>
                     <Unorderedlist bulletUnicode={0x2023} color='#40916C'><Text style={{color: 'gray', fontSize: 12}}>Idling consumes about 1/7 gallon of fuel for an hour. If you are going to wait at the parking lot or traffic light for more than 5 minutes, it is better to turn off your engine.</Text></Unorderedlist>
                 </Unorderedlist>
                 </View>
@@ -274,6 +266,10 @@ const styles = StyleSheet.create({
   paragraph: {
     fontSize: 18,
     textAlign: 'center',
+  },
+  loadingAnimation: {
+    alignSelf: 'center',
+    marginTop: '70%',
   },
 });
 
