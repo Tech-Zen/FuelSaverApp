@@ -1,10 +1,14 @@
 import { Button, Input, Image, ListItem } from "react-native-elements";
 import { Keyboard, StyleSheet, Text, FlatList, ScrollView, Linking , Modal, Pressable, View, ImageBackground} from "react-native";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useId } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Unorderedlist from 'react-native-unordered-list';
 import { getNews } from "../helpers/news.js";
 import { WebView } from "react-native-webview";
+
+//Import Analytics
+import * as Analytics from 'expo-firebase-analytics';
+import { currentUserID } from "../private/genUUID.js";
  
 const HomeScreen = ({ navigation }) => {
 //Use States for Modal Buttons
@@ -30,6 +34,12 @@ const renderNews = ({item, index}) => {
       const url = item.url;
       await Linking.canOpenURL(url)
       Linking.openURL(url);
+      Analytics.logEvent('View News Article', {
+          user: currentUserID,
+          screen: 'home',
+          purpose: 'Viewing News Article',
+          visitedURL: url,
+      })
     }}>
       <ListItem key={index}>
         <Image 
