@@ -19,7 +19,6 @@ const homeName = "Home";
 const calcName = "Fuel Calculator";
 const historyName = "History";
 const nearbyFuelName = "Nearby Fuel";
-const newsArticles = "News Articles";
 const Tab = createBottomTabNavigator();
 
 function MainContainer() {

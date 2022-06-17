@@ -39,7 +39,7 @@ const CalcScreen = ({ route }) => {
 
 
   //Validation Input Handling
-  let numOfErrors = 0;
+  const numOfErrors = 0;
 
   const validate = (values) => {
     const errors = {};
@@ -151,7 +151,6 @@ const CalcScreen = ({ route }) => {
       <Text style={{ fontSize: 10, color: '#081C15', paddingLeft: 10, paddingTop: 5, }}>Route Title</Text>
       <Input
         placeholder='Enter Your Route Title'
-        //keyboardType=
         value={state.routeTitle}
         onChangeText={(val) => updateStateObject({ routeTitle: val })}
         errorMessage={stateErrors.routeTitle}
@@ -233,7 +232,7 @@ const CalcScreen = ({ route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFF',
+    backgroundColor: '#FFFFFF',
   },
   buttons: {
     marginRight: 50,
@@ -243,11 +242,9 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     backgroundColor: '#52B788',
     borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#fff'
   },
   btnText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontSize: 20,
     textAlign: 'center',
     paddingLeft: 10,
@@ -255,9 +252,8 @@ const styles = StyleSheet.create({
   },
   CalcResultsBox: {
     margin: 5,
-    alignItems: 'left',
     //backgroundColor: '#D8F3DC',
-    borderRadius: 15,
+    //borderRadius: 15,
   },
   resultsText: {
     fontSize: 12,
