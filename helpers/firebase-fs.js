@@ -13,9 +13,10 @@ export function initFuelSaverDB() {
   initializeApp(firebaseConfig);
 }
 
-export function initFuelSaverAnalytics() {
-  getAnalytics(analytics);
-}
+//Testing analytics
+// export function initFuelSaverAnalytics() {
+//   getAnalytics(analytics);
+// }
 
 export function storeFuelAppItem(item) {
   const db = getDatabase();

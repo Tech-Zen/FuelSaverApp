@@ -1,11 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity} from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
 //import { TouchableOpacity } from "react-native-gesture-handler";
 import { View } from "react-native";
 import {
     initFuelSaverDB,
-    initFuelSaverAnalytics,
     storeFuelAppItem,
     setupFuelAppListener,
     updateHistory,
@@ -23,8 +22,8 @@ const HistoryScreen = ({ route, navigation }) => {
 
     const renderHistory = ({ item }) => {
         return (
-            <TouchableOpacity styles={{borderRadius: 10,}} onLongPress={() => navigation.navigate("Fuel Calculator", { item })}>
-                <View style = {styles.HistoryBox}>
+            <TouchableOpacity styles={{ borderRadius: 10, }} onLongPress={() => navigation.navigate("Fuel Calculator", { item })}>
+                <View style={styles.HistoryBox}>
                     <Text style={styles.cordinates}> {`Route Title: ${item.routeTitle}`}</Text>
                     <Text style={styles.cordinates}> {`Vehicles Combined MPG: ${item.mpg}`}</Text>
                     <Text style={styles.cordinates}> {`Fuel Price: ${item.price}`}</Text>
@@ -51,19 +50,19 @@ const HistoryScreen = ({ route, navigation }) => {
                     >Clear History</Text>
                 </View>
             </TouchableOpacity> */}
-                <FlatList 
-                    data={state}
-                    renderItem={renderHistory}
-                />
+            <FlatList
+                data={state}
+                renderItem={renderHistory}
+            />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-       width: '90%',
-       alignSelf: 'center',
-       flex: 1,
+        width: '90%',
+        alignSelf: 'center',
+        flex: 1,
     },
     cordinates: {
         color: "#081C15",
@@ -77,8 +76,8 @@ const styles = StyleSheet.create({
         margin: 10,
         shadowColor: "#000",
         shadowOffset: {
-          width: 0,
-          height: 2
+            width: 0,
+            height: 2
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
@@ -102,14 +101,14 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderWidth: 1,
         borderColor: '#fff'
-      },
-      btnText: {
+    },
+    btnText: {
         color: '#fff',
         fontSize: 20,
         textAlign: 'center',
         paddingLeft: 10,
         paddingRight: 10,
-      },
+    },
 
 });
 
