@@ -36,7 +36,6 @@ function MainContainer() {
   const routeNameRef = React.useRef();
   const navigationRef = React.useRef();
 
-
   React.useEffect(() => {
     const state = navigationRef.current.getRootState();
 
@@ -54,6 +53,21 @@ function MainContainer() {
           Analytics.setCurrentScreen(currentRouteName, currentRouteName);
         }
       }}
+    // onReady={() =>
+    //   (routeNameRef.current = navigationRef.current.getCurrentRoute().name)
+    // }
+    // onStateChange={() => {
+    //   const previousRouteName = routeNameRef.current;
+    //   const currentRouteName = navigationRef.current.getCurrentRoute().name;
+    //   if (previousRouteName !== currentRouteName) {
+    //       Analytics.logEvent("screen_view", {
+    //       screen_name: currentRouteName,
+    //       screen_class: currentRouteName,
+    //     });
+    //   }
+    // Save the current route name for later comparison
+    //routeNameRef.current = currentRouteName;
+    // }}
     >
       <Tab.Navigator
         initialRouteName={homeName}
