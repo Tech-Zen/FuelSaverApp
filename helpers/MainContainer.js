@@ -7,7 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 //Import Analytics
 import * as Analytics from 'expo-firebase-analytics';
-import { useRef } from "react";
+//import { useRef } from "react";
 
 // Screens
 import HomeScreen from '../screens/HomeScreen';
@@ -22,9 +22,39 @@ const historyName = "History";
 const nearbyFuelName = "Nearby Fuel";
 const Tab = createBottomTabNavigator();
 
+const getActiveRouteName = state => {
+  const route = state.routes[state.index];
+  if (route.state) {
+    // Dive into nested navigators
+    return getActiveRouteName(route.state);
+  }
+  return route.name;
+};
+
 function MainContainer() {
+
+  const routeNameRef = React.useRef();
+  const navigationRef = React.useRef();
+
+
+  React.useEffect(() => {
+    const state = navigationRef.current.getRootState();
+
+    // Save the initial route name
+    routeNameRef.current = getActiveRouteName(state);
+  }, []);
+
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      ref={navigationRef}
+      onStateChange={(state) => {
+        const previousRouteName = routeNameRef.current;
+        const currentRouteName = getActiveRouteName(state);
+        if (previousRouteName !== currentRouteName) {
+          Analytics.setCurrentScreen(currentRouteName, currentRouteName);
+        }
+      }}
+    >
       <Tab.Navigator
         initialRouteName={homeName}
 
