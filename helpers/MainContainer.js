@@ -46,12 +46,16 @@ function MainContainer() {
   return (
     <NavigationContainer
       ref={navigationRef}
-      onStateChange={(state) => {
+      onStateChange={async (state) => {
         const previousRouteName = routeNameRef.current;
         const currentRouteName = getActiveRouteName(state);
         if (previousRouteName !== currentRouteName) {
-          Analytics.setCurrentScreen(currentRouteName, currentRouteName);
+          await Analytics.logEvent("screen_view", {
+            screen_name: currentRouteName,
+            screen_class: currentRouteName,
+          });
         }
+        routeNameRef.current = currentRouteName;
       }}
     // onReady={() =>
     //   (routeNameRef.current = navigationRef.current.getCurrentRoute().name)
