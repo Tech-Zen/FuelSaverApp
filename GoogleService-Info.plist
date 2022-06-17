@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1002165084621-7i4smtp4npt0rvhjo3a9pj668hmdq7sn.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1002165084621-7i4smtp4npt0rvhjo3a9pj668hmdq7sn</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDN46HzmNl20Wpho1g4DZXFOe5aWAz95Z4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1002165084621</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>edu.gvsu.fuelsaver</string>
+	<key>PROJECT_ID</key>
+	<string>fuelsaver-a5801</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fuelsaver-a5801.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1002165084621:ios:4d5b4dde5244b2ea182484</string>
+	<key>DATABASE_URL</key>
+	<string>https://fuelsaver-a5801-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

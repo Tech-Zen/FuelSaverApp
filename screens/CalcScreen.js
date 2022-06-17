@@ -2,7 +2,6 @@ import { Input } from "react-native-elements";
 import { Keyboard, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
 //import { TouchableOpacity } from "react-native-gesture-handler";
-import { storeHistoryItem, setupHistoryListener, initHistoryDB } from "../helpers/firebase-fs.js"
 //firebase imports
 import {
   initFuelSaverDB,
@@ -13,6 +12,10 @@ import {
   deleteHistory
 } from "../helpers/firebase-fs";
 import moment from 'moment';
+
+//Import Analytics
+import * as Analytics from 'expo-firebase-analytics';
+import { currentUserID } from "../private/genUUID.js";
 
 const CalcScreen = ({ route, navigation }) => {
   //Size = TankSize

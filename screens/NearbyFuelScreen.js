@@ -9,6 +9,10 @@ import * as Location from 'expo-location';
 import { places_api_key } from "../private/placesAPIKey.js";
 import { Center } from "native-base";
 
+//Import Analytics
+import * as Analytics from 'expo-firebase-analytics';
+import { currentUserID } from "../private/genUUID.js";
+
 const NearbyFuel = (route) => {
 
   //Use State for Gas Stations using Google Places API
