@@ -1,7 +1,7 @@
-import { StyleSheet, Text} from "react-native";
+import { StyleSheet, Text, TouchableOpacity} from "react-native";
 import React, { useState, useEffect } from "react";
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
-import { TouchableOpacity } from "react-native-gesture-handler";
+//import { TouchableOpacity } from "react-native-gesture-handler";
 import { View } from "react-native";
 import {
     initFuelSaverDB,

@@ -12,11 +12,11 @@ export default function App() {
 
   const Stack = createNativeStackNavigator();
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    //<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
         <MainContainer/>
       </SafeAreaView>
-    </TouchableWithoutFeedback>
+    //</TouchableWithoutFeedback>
   );
 }
 

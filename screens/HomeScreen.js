@@ -1,10 +1,9 @@
 import { Button, Input, Image, ListItem } from "react-native-elements";
-import { Keyboard, StyleSheet, Text, FlatList, ScrollView, Linking , Modal, Pressable, View, ImageBackground} from "react-native";
+import { Keyboard, StyleSheet, Text, FlatList, ScrollView, Linking , Modal, Pressable, View, ImageBackground, TouchableOpacity} from "react-native";
 import React, { useState, useEffect, useContext, useId } from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
+//import { TouchableOpacity } from "react-native-gesture-handler";
 import Unorderedlist from 'react-native-unordered-list';
 import { getNews } from "../helpers/news.js";
-import { WebView } from "react-native-webview";
 
 //Import Analytics
 import * as Analytics from 'expo-firebase-analytics';
@@ -51,7 +50,7 @@ const renderNews = ({item, index}) => {
         </ListItem.Content>
         <ListItem.Chevron/>
       </ListItem>
-    </TouchableOpacity>
+      </TouchableOpacity>
   );
 };
 
