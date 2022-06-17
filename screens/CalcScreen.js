@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
   buttons: {
     marginRight: 50,
     marginLeft: 50,
-    marginTop: 10,
+    marginTop: 5,
     paddingTop: 10,
     paddingBottom: 10,
     backgroundColor: '#52B788',
@@ -254,13 +254,13 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   resultsText: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: 'bold',
     color: '#2D6A4F'
   },
   resultsTitle: {
     marginTop: 5,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#2D6A4F',
     alignSelf: 'center',
