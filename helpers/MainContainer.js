@@ -7,6 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 //Import Analytics
 import * as Analytics from 'expo-firebase-analytics';
+import { useRef } from "react";
 
 // Screens
 import HomeScreen from '../screens/HomeScreen';
@@ -26,8 +27,8 @@ function MainContainer() {
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName={homeName}
-        
-        screenOptions={({route}) => ({
+
+        screenOptions={({ route }) => ({
           "tabBarActiveTintColor": "#2D6A4F",
           "tabBarInactiveTintColor": "grey",
           "tabBarLabelStyle": {
@@ -53,14 +54,14 @@ function MainContainer() {
             } else if (routeName === nearbyFuelName) {
               iconName = focused ? 'speedometer-outline' : 'speedometer-outline';
             }
-              else if (routeName === historyName) {
+            else if (routeName === historyName) {
               iconName = focused ? 'archive-outline' : 'archive-outline';
-            } 
+            }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}
-        >
-        
+      >
+
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={calcName} component={CalcScreen} />
         <Tab.Screen name={nearbyFuelName} component={NearbyFuelScreen} />

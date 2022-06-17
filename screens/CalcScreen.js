@@ -1,6 +1,7 @@
 import { Input } from "react-native-elements";
 import { Keyboard, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
+import { Dimensions } from 'react-native';
 //firebase imports
 import {
   storeFuelAppItem,
@@ -125,7 +126,7 @@ const CalcScreen = ({ route }) => {
       user: currentUserID,
       screen: 'Calc Screen',
       purpose: 'User calculated their route',
-  })
+    })
     var fuelBurn = calcFuelBurn(state.size, state.route, state.mpg)
     var costToFill = calcTankCost(state.size, state.price)
     var tripCost = calcTripCost(state.size, state.route, state.mpg, state.price)
@@ -147,52 +148,52 @@ const CalcScreen = ({ route }) => {
   }
 
   return (
-    <View>
-      <View style={{}}>
-      <Text style={{ fontSize: 10, color: '#081C15', paddingLeft: 10, paddingTop: 5, }}>Route Title</Text>
-      <Input
-        placeholder='Enter Your Route Title'
-        value={state.routeTitle}
-        onChangeText={(val) => updateStateObject({ routeTitle: val })}
-        errorMessage={stateErrors.routeTitle}
-        errorStyle={{ color: 'red' }}
-      />
-      <Text style={{ fontSize: 10, color: '#081C15', paddingLeft: 10, }}>Vehicles Combined MPG</Text>
-      <Input
-        placeholder='Enter Vehicles Combined MPG'
-        keyboardType='numeric'
-        value={state.mpg}
-        onChangeText={(val) => updateStateObject({ mpg: val })}
-        errorMessage={stateErrors.mpg}
-        errorStyle={{ color: 'red' }}
-      />
-      <Text style={{ fontSize: 10, color: '#081C15', paddingLeft: 10, }}>Fuel Price</Text>
-      <Input
-        placeholder='Enter Fuel Price (USD)'
-        keyboardType='numeric'
-        value={state.price}
-        onChangeText={(val) => updateStateObject({ price: val })}
-        errorMessage={stateErrors.price}
-        errorStyle={{ color: 'red' }}
-      />
-      <Text style={{ fontSize: 10, color: '#081C15', paddingLeft: 10, }}>Fuel Tank Size</Text>
-      <Input
-        placeholder='Enter Fuel Tank Size (gals)'
-        keyboardType='numeric'
-        value={state.size}
-        onChangeText={(val) => updateStateObject({ size: val })}
-        errorMessage={stateErrors.size}
-        errorStyle={{ color: 'red' }}
-      />
-      <Text style={{ fontSize: 10, color: '#081C15', paddingLeft: 10, }}>Route Distance</Text>
-      <Input
-        placeholder='Enter Route Distance (miles)'
-        keyboardType='numeric'
-        value={state.route}
-        onChangeText={(val) => updateStateObject({ route: val })}
-        errorMessage={stateErrors.route}
-        errorStyle={{ color: 'red' }}
-      />
+    <View style={styles.container}>
+      <View>
+        <Text style={{ fontSize: 10, color: '#081C15', paddingLeft: 10, paddingTop: 5, }}>Route Title</Text>
+        <Input
+          placeholder='Enter Your Route Title'
+          value={state.routeTitle}
+          onChangeText={(val) => updateStateObject({ routeTitle: val })}
+          errorMessage={stateErrors.routeTitle}
+          errorStyle={{ color: 'red' }}
+        />
+        <Text style={{ fontSize: 10, color: '#081C15', paddingLeft: 10, }}>Vehicles Combined MPG</Text>
+        <Input
+          placeholder='Enter Vehicles Combined MPG'
+          keyboardType='numeric'
+          value={state.mpg}
+          onChangeText={(val) => updateStateObject({ mpg: val })}
+          errorMessage={stateErrors.mpg}
+          errorStyle={{ color: 'red' }}
+        />
+        <Text style={{ fontSize: 10, color: '#081C15', paddingLeft: 10, }}>Fuel Price</Text>
+        <Input
+          placeholder='Enter Fuel Price (USD)'
+          keyboardType='numeric'
+          value={state.price}
+          onChangeText={(val) => updateStateObject({ price: val })}
+          errorMessage={stateErrors.price}
+          errorStyle={{ color: 'red' }}
+        />
+        <Text style={{ fontSize: 10, color: '#081C15', paddingLeft: 10, }}>Fuel Tank Size</Text>
+        <Input
+          placeholder='Enter Fuel Tank Size (gals)'
+          keyboardType='numeric'
+          value={state.size}
+          onChangeText={(val) => updateStateObject({ size: val })}
+          errorMessage={stateErrors.size}
+          errorStyle={{ color: 'red' }}
+        />
+        <Text style={{ fontSize: 10, color: '#081C15', paddingLeft: 10, }}>Route Distance</Text>
+        <Input
+          placeholder='Enter Route Distance (miles)'
+          keyboardType='numeric'
+          value={state.route}
+          onChangeText={(val) => updateStateObject({ route: val })}
+          errorMessage={stateErrors.route}
+          errorStyle={{ color: 'red' }}
+        />
       </View>
 
       <TouchableOpacity
@@ -217,7 +218,7 @@ const CalcScreen = ({ route }) => {
             user: currentUserID,
             screen: 'Calc Screen',
             purpose: 'User cleared their route calculation',
-        })
+          })
         }}
       >
         <Text style={styles.btnText}>Clear</Text>
@@ -232,9 +233,18 @@ const CalcScreen = ({ route }) => {
   );
 }
 
+const WIDTH = Dimensions.get('screen').width //* 0.8
+const HEIGHT = Dimensions.get('screen').height //* 0.2 - 56
+const FONTSCALE = Dimensions.get('screen').fontScale * 0.2
+const FONTSIZE = Dimensions.get('screen').fontSize
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFFF',
+    width: WIDTH,
+    height: HEIGHT,
+    fontScale: FONTSCALE,
+    fontSize: FONTSIZE
   },
   buttons: {
     marginRight: 50,
