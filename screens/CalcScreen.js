@@ -121,11 +121,11 @@ const CalcScreen = ({ route }) => {
   const handleSubmit = () => {
     //validate state of inputs
     setStateErrors(validate(state));
-  //   Analytics.logEvent('Calculated Fuel', {
-  //     user: currentUserID,
-  //     screen: 'Calc Screen',
-  //     purpose: 'User calculated their route',
-  // })
+    Analytics.logEvent('Calculated Fuel', {
+      user: currentUserID,
+      screen: 'Calc Screen',
+      purpose: 'User calculated their route',
+  })
     var fuelBurn = calcFuelBurn(state.size, state.route, state.mpg)
     var costToFill = calcTankCost(state.size, state.price)
     var tripCost = calcTripCost(state.size, state.route, state.mpg, state.price)
@@ -148,6 +148,7 @@ const CalcScreen = ({ route }) => {
 
   return (
     <View>
+      <View style={{}}>
       <Text style={{ fontSize: 10, color: '#081C15', paddingLeft: 10, paddingTop: 5, }}>Route Title</Text>
       <Input
         placeholder='Enter Your Route Title'
@@ -192,6 +193,7 @@ const CalcScreen = ({ route }) => {
         errorMessage={stateErrors.route}
         errorStyle={{ color: 'red' }}
       />
+      </View>
 
       <TouchableOpacity
         style={styles.buttons}
@@ -211,11 +213,11 @@ const CalcScreen = ({ route }) => {
           //Reset and clear input fields, calculated results, and errors
           updateStateObject({ mpg: '', price: '', size: '', route: '', distance: '', full: '', calcResults: '', routeTitle: '', routeDets: '' })
           setStateErrors('');
-        //   Analytics.logEvent('Cleared Calculator Screen', {
-        //     user: currentUserID,
-        //     screen: 'Calc Screen',
-        //     purpose: 'User cleared their route calculation',
-        // })
+          Analytics.logEvent('Cleared Calculator Screen', {
+            user: currentUserID,
+            screen: 'Calc Screen',
+            purpose: 'User cleared their route calculation',
+        })
         }}
       >
         <Text style={styles.btnText}>Clear</Text>
@@ -252,8 +254,6 @@ const styles = StyleSheet.create({
   },
   CalcResultsBox: {
     margin: 5,
-    //backgroundColor: '#D8F3DC',
-    //borderRadius: 15,
   },
   resultsText: {
     fontSize: 12,
