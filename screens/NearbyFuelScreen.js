@@ -75,6 +75,12 @@ const NearbyFuel = (route) => {
             });
             await Linking.canOpenURL(url)
             Linking.openURL(url);
+            Analytics.logEvent('User Clicked Nearby Fuel ', {
+              user: currentUserID,
+              screen: 'Nearby Fuel',
+              purpose: 'User routing to a nearby gas station',
+              url: url,
+          })
           }}>
             <ListItem key={index}>
               <Image 

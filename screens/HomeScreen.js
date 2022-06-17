@@ -63,20 +63,41 @@ const renderNews = ({item, index}) => {
       <View style={styles.topContainer}>
           <TouchableOpacity 
             style={styles.box}
-            onPress={() => {setTipsModalVisible(true)}}
+            onPress={() => {setTipsModalVisible(true)
+              Analytics.logEvent('Viewed Fuel Tips', {
+                user: currentUserID,
+                screen: 'home',
+                purpose: 'Viewing Fuel Tips',
+            })
+            
+            }}
             >
             <Text style={styles.boxText}>  Fuel Tips  </Text>
           </TouchableOpacity>
           <TouchableOpacity 
             style={styles.box}
-            onPress={() => {setTrendsModalVisible(true)}}
+            onPress={() => {
+              setTrendsModalVisible(true)
+              Analytics.logEvent('Viewed Fuel Facts', {
+                user: currentUserID,
+                screen: 'home',
+                purpose: 'Viewing Fuel Facts',
+            })
+            }
+          }
             >
             <Text style={styles.boxText}>Fuel Facts</Text>
           </TouchableOpacity>
           <TouchableOpacity 
             style={styles.box}
             onPress={() => {
-              setGuideModalVisible(true)}}
+              setGuideModalVisible(true)
+              Analytics.logEvent('Viewed Fuel Myths', {
+                user: currentUserID,
+                screen: 'home',
+                purpose: 'Viewing Fuel Myths',
+            })
+            }}
             >
             <Text style={styles.boxText}>Fuel Myths</Text>
           </TouchableOpacity>
